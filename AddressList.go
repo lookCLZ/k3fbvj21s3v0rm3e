@@ -14,7 +14,7 @@ func addPerson() {
 	var address string
 	var phone string
 	var exit string
-	var addressPhone map[string]string
+	var addressPhone = map[string]string{}
 	fmt.Println("请输入姓名")
 	fmt.Scan(&name)
 	for {
@@ -33,7 +33,21 @@ func addPerson() {
 		}
 	}
 	personList = append(personList, Person{userName: name, addressPhone: addressPhone})
-	fmt.Println(personList)
+	showPersonList()
+}
+
+func showPersonList() {
+	if len(personList) == 0 {
+		fmt.Println("暂无联系人信息")
+	}else{
+		for _,v:=range personList {
+			fmt.Println("姓名:",v.userName)
+			for k,v := range v.addressPhone {
+				fmt.Println("电话类型:",k)
+				fmt.Println("电话号码:",v)
+			}
+		}
+	}
 }
 
 func main() {
