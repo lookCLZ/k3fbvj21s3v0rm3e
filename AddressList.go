@@ -36,6 +36,23 @@ func addPerson() {
 	showPersonList()
 }
 
+func removePerson() {
+	var name string
+	var index int = -1
+	fmt.Println("请输入与要删除的联系人姓名:")
+	fmt.Scan(&name)
+	for i:=0;i<len(personList);i++{
+		if personList[i].userName==name{
+			index = i
+			break
+		}
+	}
+	if index!=-1 {
+		personList = append(personList[:index],personList[index+1:]...)	
+	}
+	showPersonList()
+}
+
 func showPersonList() {
 	if len(personList) == 0 {
 		fmt.Println("暂无联系人信息")
@@ -51,7 +68,9 @@ func showPersonList() {
 }
 
 func main() {
-	scanNum()
+	for {
+		scanNum()
+	}
 }
 
 func scanNum() {
@@ -73,6 +92,7 @@ func switchType(n int) {
 		addPerson()
 	case 2:
 		// 删除联系人的操作
+		removePerson()
 	case 3:
 	// 查询联系人的操作
 	case 4:
