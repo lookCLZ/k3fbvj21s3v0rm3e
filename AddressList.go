@@ -2,7 +2,41 @@ package main
 
 import "fmt"
 
-func main(){
+type Person struct {
+	userName     string
+	addressPhone map[string]string
+}
+
+var personList []Person
+
+func addPerson() {
+	var name string
+	var address string
+	var phone string
+	var exit string
+	var addressPhone map[string]string
+	fmt.Println("请输入姓名")
+	fmt.Scan(&name)
+	for {
+		fmt.Println("请输入电话类型")
+		fmt.Scan(&address)
+		fmt.Println("请输入电话号码")
+		fmt.Scan(&phone)
+
+		addressPhone[address] = phone
+		fmt.Println("如果结束电话的录入，请按Q")
+		fmt.Scan(&exit)
+		if exit == "Q" {
+			break
+		} else {
+			continue
+		}
+	}
+	personList = append(personList, Person{userName: name, addressPhone: addressPhone})
+	fmt.Println(personList)
+}
+
+func main() {
 	scanNum()
 }
 
@@ -18,19 +52,16 @@ func scanNum() {
 	switchType(num)
 }
 
-func addPerson() {
-	
-}
-
 func switchType(n int) {
 	switch n {
 	case 1:
 		//添加联系人的操作
+		addPerson()
 	case 2:
 		// 删除联系人的操作
 	case 3:
-		// 查询联系人的操作
-		case 4:
-			// 编辑联系人的操作	
+	// 查询联系人的操作
+	case 4:
+		// 编辑联系人的操作
 	}
 }
