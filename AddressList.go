@@ -78,13 +78,47 @@ func findPerson() *Person {
 func editPerson() {
 	var p *Person
 	var name string
+	var num int
+	var menu []string
+	var pNum int
+	var phone string
 	p=findPerson()
 	if p!=nil{
-		fmt.Println("请输入新的姓名:")
-		fmt.Scan(&name)
-		p.userName=name
+		
+		for {
+			fmt.Println("编辑用户名称请按5,编辑电话请按6,退出请按7")
+			fmt.Scan(&num)
+			switch num {
+			case 5:
+				fmt.Println("请输入新的姓名:")
+				fmt.Scan(&name)
+				p.userName=name
+			case 6:
+				var j int
+				for k,v:=range p.addressPhone {
+					fmt.Println("编辑(",k,")",v,"请按",j)
+					menu=append(menu,k)
+					j++
+				}
+				fmt.Println("请输入编辑号码的类型")
+				fmt.Scan(&pNum)
+	
+				for k,v:=range menu {
+					if k==pNum{
+						fmt.Println("请输入新的电话号码")
+						fmt.Scan(&phone)
+						p.addressPhone[v]=phone
+					}
+				}
+			}
+			if num == 7 {
+				break
+			}
+		}
 		showPersonList()
-	}	
+	}else{
+		fmt.Println("没有找到要编辑的联系人信息")
+	}
 }
 
 func showPersonList() {
