@@ -47,6 +47,7 @@ type BloggerInterface interface{
 
 func (b *Blogger)Attach(bFans FansInterface){
 	b.Fans=append(b.Fans,bFans)
+	fmt.Println(b.Fans)
 }
 
 type PostContent struct {
@@ -73,9 +74,23 @@ type FriedFans struct {
 	Fans
 }
 
+func (f *FriedFans)Update(){
+
+}
+func (f *FriedFans)Action(){
+
+}
+
 //黑粉
 type BadFans struct {
 	Fans
+}
+
+func (f *BadFans)Update(){
+
+}
+func (f *BadFans)Action(){
+
 }
 
 func NewBlogger(name string) *Blogger {
@@ -91,5 +106,11 @@ func NewBlogger(name string) *Blogger {
 
 func main(){
 	blg:=NewBlogger("张三")
+
+	friedFans:=new(FriedFans)
+	friedFans.Id=1
+	friedFans.Name="李四"
+
+	blg.Attach(friedFans)
 	blg.PostWeiBo("今天天气很好",1)
 }
