@@ -13,11 +13,12 @@ type Blogger struct {
 	Base
 	WeiBos []*PostContent
 	Comments map[int][]*PostContent
+	Fans []FansInterface
 }
 //发布微博的方法实现
 func (b *Blogger)PostWeiBo(content string,wbType int) {
 	weibo:=new(PostContent)
-	weibo.Id=1
+	weibo.Id=b.GetId()
 	weibo.Content=content
 	weibo.Type=wbType
 	weibo.CommentTime=time.Now()
@@ -29,11 +30,23 @@ func (b *Blogger)PostWeiBo(content string,wbType int) {
 	}
 }
 
+//获取微博编号
+func (b *Blogger)GetId() int {
+	if len(b.WeiBos)==0{
+		return 0
+	}
+	return b.WeiBos[len(b.WeiBos)-1].Id+1
+}
+
 //博主接口
 type BloggerInterface interface{
 	Attach()
 	Detach()
 	Notify()
+}
+
+func (b *Blogger)Attach(bFans FansInterface){
+	b.Fans=append(b.Fans,bFans)
 }
 
 type PostContent struct {
@@ -68,11 +81,13 @@ type BadFans struct {
 func NewBlogger(name string) *Blogger {
 	blg:=new(Blogger)
 	blg.Name=name
-	blg.Comments=make(map[int][]*PostContent)
-	blg.WeiBos=make([]*PostContent,0)
+	// blg.Comments=make(map[int][]*PostContent)
+	// blg.WeiBos=make([]*PostContent,0)
 
 	return blg
 }
+
+
 
 func main(){
 	blg:=NewBlogger("张三")
