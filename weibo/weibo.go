@@ -15,6 +15,7 @@ type Blogger struct {
 	Comments map[int][]*PostContent
 	Fans []FansInterface
 }
+
 //发布微博的方法实现
 func (b *Blogger)PostWeiBo(content string,wbType int) {
 	weibo:=new(PostContent)
@@ -25,6 +26,7 @@ func (b *Blogger)PostWeiBo(content string,wbType int) {
 	weibo.PostMan=b.Name
 
 	b.WeiBos=append(b.WeiBos,weibo)
+	b.Notify(weibo.Id)
 }
 
 //获取微博编号
@@ -37,9 +39,10 @@ func (b *Blogger)GetId() int {
 
 //博主接口
 type BloggerInterface interface{
-	Attach()
-	Detach()
-	Notify()
+	Attach(bFans FansInterface)
+	Detach(bFans FansInterface)
+	Notify(id int)
+	GetWeiBo(wbid int) *PostContent
 }
 
 func (b *Blogger)Attach(bFans FansInterface){
@@ -47,13 +50,16 @@ func (b *Blogger)Attach(bFans FansInterface){
 }
 
 func (b *Blogger)Detach(bFans FansInterface){
-	fmt.Printf("%p\n",bFans)
-	fmt.Println(b.Fans)
 	for i:=0;i<len(b.Fans);i++{
-		fmt.Println(i,"=>",b.Fans[i])
 		if b.Fans[i]==bFans{
 			b.Fans=append(b.Fans[:i],b.Fans[i+1:]...)
 		}
+	}
+}
+
+func (b *Blogger)Notify(wbid int) {
+	for _,fan:=range b.Fans {
+		fan.Update(b,wbid)
 	}
 }
 
@@ -72,8 +78,17 @@ type Fans struct{
 }
 
 type FansInterface interface{
-	Update()
-	Action()
+	Update(bloggerI BloggerInterface,wbid int)
+	Action(bloggerI BloggerInterface,wbid int)
+}
+
+func (b *Blogger)GetWeiBo(wbid int) *PostContent{
+	for _,blog:=range b.WeiBos {
+		if blog.Id==wbid {
+			return blog
+		}
+	}
+	return nil
 }
 
 //真爱粉
@@ -81,11 +96,13 @@ type FriedFans struct {
 	Fans
 }
 
-func (f *FriedFans)Update(){
-
+func (f *FriedFans)Update(bloggerI BloggerInterface,wbid int){
+	fmt.Printf("%s,你所关注的博主发布了一个微博",f.Name)
+	f.Action(bloggerI,wbid)
 }
-func (f *FriedFans)Action(){
-
+func (f *FriedFans)Action(bloggerI BloggerInterface, wbid int){
+	weibo:=bloggerI.GetWeiBo(wbid)
+	fmt.Println(weibo)
 }
 
 //黑粉
@@ -93,11 +110,13 @@ type BadFans struct {
 	Fans
 }
 
-func (f *BadFans)Update(){
-
+func (f *BadFans)Update(bloggerI BloggerInterface,wbid int){
+	fmt.Printf("%s,你所关注的博主发布了一个微博",f.Name)
+	f.Action(bloggerI,wbid)
 }
-func (f *BadFans)Action(){
-
+func (f *BadFans)Action(bloggerI BloggerInterface,wbid int){
+	weibo:=bloggerI.GetWeiBo(wbid)
+	fmt.Println(weibo)
 }
 
 func NewBlogger(name string) *Blogger {
@@ -119,10 +138,7 @@ func main(){
 	friedFans.Name="李四"
 
 	blg.Attach(friedFans)
-	blg.Detach(friedFans)
+	// blg.Detach(friedFans)
 
-	for _,value:=range blg.Fans {
-		fmt.Println(value)
-	}
 	blg.PostWeiBo("今天天气很好",1)
 }
