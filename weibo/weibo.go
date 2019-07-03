@@ -116,7 +116,22 @@ func (f *BadFans)Update(bloggerI BloggerInterface,wbid int){
 }
 func (f *BadFans)Action(bloggerI BloggerInterface,wbid int){
 	weibo:=bloggerI.GetWeiBo(wbid)
-	fmt.Println(weibo)
+	cType:=weibo.Type
+	message:=""
+	switch cType {
+	case 1:
+		message="非常好"
+	case 2:
+		message="加油"
+	}
+
+	postComment:=PostContent{0,message,time.Now(),cType,f.Name,weibo.PostMan}
+	blogger,_:=bloggerI.(*Blogger)
+	blogger.AddComment(postComment,wbid)
+}
+
+func (b *Blogger) AddComment(postComment PostContent,wbid int) {
+	b.Comments[wbid]=append(b.Comments[wbid],&postComment)
 }
 
 func NewBlogger(name string) *Blogger {
