@@ -97,12 +97,26 @@ type FriedFans struct {
 }
 
 func (f *FriedFans)Update(bloggerI BloggerInterface,wbid int){
-	fmt.Printf("%s,你所关注的博主发布了一个微博",f.Name)
+	fmt.Printf("%s,你所关注的博主发布了一个微博\n",f.Name)
 	f.Action(bloggerI,wbid)
 }
 func (f *FriedFans)Action(bloggerI BloggerInterface, wbid int){
 	weibo:=bloggerI.GetWeiBo(wbid)
-	fmt.Println(weibo)
+	cType:=weibo.Type
+	message:=""
+	switch cType {
+	case 1:
+		message="非常好"
+	case 2:
+		message="加油"
+	}
+
+	postComment:=PostContent{0,message,time.Now(),cType,f.Name,weibo.PostMan}
+	blogger,_:=bloggerI.(*Blogger)
+	fmt.Println(postComment)
+	fmt.Println(wbid)
+	blogger.AddComment(postComment,wbid)
+	blogger.ShowComment(wbid)
 }
 
 //黑粉
@@ -128,16 +142,30 @@ func (f *BadFans)Action(bloggerI BloggerInterface,wbid int){
 	postComment:=PostContent{0,message,time.Now(),cType,f.Name,weibo.PostMan}
 	blogger,_:=bloggerI.(*Blogger)
 	blogger.AddComment(postComment,wbid)
+	blogger.ShowComment(wbid)
 }
 
 func (b *Blogger) AddComment(postComment PostContent,wbid int) {
 	b.Comments[wbid]=append(b.Comments[wbid],&postComment)
+	fmt.Println(b.Comments[wbid])
+	fmt.Println(&postComment)
+	fmt.Println(wbid)
+}
+
+func (b *Blogger) ShowComment(wbid int) {
+	blog:=b.GetWeiBo(wbid)
+	fmt.Println("博主名称：",b.Name)
+	fmt.Println("微博内容：",blog.Content)
+	for _,v:=range b.Comments[wbid] {
+		fmt.Println("粉丝名称:",v.PostMan)
+		fmt.Println("评论内容:",v.Content)
+	}
 }
 
 func NewBlogger(name string) *Blogger {
 	blg:=new(Blogger)
 	blg.Name=name
-	// blg.Comments=make(map[int][]*PostContent)
+	blg.Comments=make(map[int][]*PostContent)
 	// blg.WeiBos=make([]*PostContent,0)
 
 	return blg
