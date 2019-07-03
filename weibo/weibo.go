@@ -25,9 +25,6 @@ func (b *Blogger)PostWeiBo(content string,wbType int) {
 	weibo.PostMan=b.Name
 
 	b.WeiBos=append(b.WeiBos,weibo)
-	for _,v:=range b.WeiBos{
-		fmt.Println(*v)
-	}
 }
 
 //获取微博编号
@@ -47,7 +44,17 @@ type BloggerInterface interface{
 
 func (b *Blogger)Attach(bFans FansInterface){
 	b.Fans=append(b.Fans,bFans)
+}
+
+func (b *Blogger)Detach(bFans FansInterface){
+	fmt.Printf("%p\n",bFans)
 	fmt.Println(b.Fans)
+	for i:=0;i<len(b.Fans);i++{
+		fmt.Println(i,"=>",b.Fans[i])
+		if b.Fans[i]==bFans{
+			b.Fans=append(b.Fans[:i],b.Fans[i+1:]...)
+		}
+	}
 }
 
 type PostContent struct {
@@ -112,5 +119,10 @@ func main(){
 	friedFans.Name="李四"
 
 	blg.Attach(friedFans)
+	blg.Detach(friedFans)
+
+	for _,value:=range blg.Fans {
+		fmt.Println(value)
+	}
 	blg.PostWeiBo("今天天气很好",1)
 }
