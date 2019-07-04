@@ -20,14 +20,13 @@ func main() {
 		file2.Close()
 		fmt.Println("关闭文件")
 	}()
-
+	file1.Seek(5,0)
 	buffer:=make([]byte,2)
 	for {
 	n,err:=file1.Read(buffer)
 		if err==io.EOF {
 			break
 		}
-	fmt.Println((buffer))
 	file2.WriteString(string(buffer)[:n])
 	}
 }
