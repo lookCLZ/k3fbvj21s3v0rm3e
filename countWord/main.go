@@ -10,10 +10,12 @@ import (
 
 // count "hello" 
 func RandAllTxt(src string,count *int) {
+	// 打开文件
 	file,err:=os.OpenFile(src,os.O_RDONLY,os.ModeDir)
 	if err !=nil {
 		fmt.Println("打开",src,"错误")
 	}
+	// 读取目录
 	fileInfos,err:=file.Readdir(-1)
 	if err!=nil {
 		fmt.Println("读取目录",src,"错误")
