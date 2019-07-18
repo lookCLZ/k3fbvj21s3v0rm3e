@@ -43,11 +43,12 @@ func HandlerConnect(conn net.Conn) {
 	}
 	onlineMap[netAddr]=clnt
 
-	// go WriteMsgToClient(conn,clnt)
-	fmt.Println(1)
-	message <- MakeMsg(clnt,"已上线")
+	go WriteMsgToClient(conn,clnt)
+	message <- MakeMsg(clnt,"已上线\n")
 	fmt.Println(2)
 	go ReadMsg(conn,clnt)
+
+	for {}
 }
 
 // 全go程管理器
@@ -63,13 +64,13 @@ func Manager() {
 // 监听自己的耳朵，有就写入
 func WriteMsgToClient(conn net.Conn,clnt Client) {
 	for msg:=range clnt.C {
-		conn.Write([]byte(msg + "\n"))
+		conn.Write([]byte(msg))
 	}
 }
 
 // 组装用户的消息的格式
 func MakeMsg(clnt Client,msg string) (string) {
-	return clnt.Name + msg
+	return clnt.Name +"："+ msg
 }
 
 func ReadMsg(conn net.Conn,clnt Client) {
@@ -77,8 +78,12 @@ func ReadMsg(conn net.Conn,clnt Client) {
 	for {
 		n,_:=conn.Read(buf)
 		if n==0{ 
-			message <- MakeMsg(clnt, "刚刚下线了")
+			message <- MakeMsg(clnt, "刚刚下线了\n")
 			return
+		} else if string(buf[:n])=="who" {
+			for _,v:=range onlineMap {
+				message<-v.Name
+			}
 		}
 
 		msg:=string(buf)
