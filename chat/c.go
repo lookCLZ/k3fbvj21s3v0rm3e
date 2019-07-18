@@ -73,6 +73,7 @@ func MakeMsg(clnt Client,msg string) (string) {
 	return clnt.Name +"："+ msg
 }
 
+// 读取客户端发来的消息
 func ReadMsg(conn net.Conn,clnt Client) {
 	buf:=make([]byte,4096)
 	for {
@@ -86,7 +87,7 @@ func ReadMsg(conn net.Conn,clnt Client) {
 			}
 		}
 
-		msg:=string(buf)
+		msg:=string(buf[:n])
 		message <- MakeMsg(clnt, msg)
 
 	}
