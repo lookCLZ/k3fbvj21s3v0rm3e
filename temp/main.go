@@ -1,7 +1,3 @@
-// 12 august 2018
-
-// +build OMIT
-
 package main
 
 import (
