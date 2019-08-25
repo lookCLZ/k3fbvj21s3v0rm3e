@@ -18,9 +18,6 @@ func main() {
 	fmt.Scan(&end)
 
 	toWork(start, end)
-	for {
-
-	}
 }
 
 func toWork(start, end int) {
