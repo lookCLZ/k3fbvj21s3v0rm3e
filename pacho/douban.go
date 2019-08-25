@@ -26,20 +26,20 @@ func main() {
 func toWork(start, end int) {
 	fmt.Printf("正在爬取 %d 到 %d 页...\n", start, end)
 
-	page:=make(chan int)  //防止主go程 提前结束
+	page := make(chan int) //防止主go程 提前结束
 
 	for i := start; i < end+1; i++ {
-		go SpiderPageDB(i,page)
+		go SpiderPageDB(i, page)
 	}
-	for i:=start;i<=end;i++{
-		fmt.Println("第%d页爬取完毕\n",<-page)
+	for i := start; i <= end; i++ {
+		fmt.Println("第%d页爬取完毕\n", <-page)
 	}
 }
 
-func SpiderPageDB(idx int,page chan int) {
+func SpiderPageDB(idx int, page chan int) {
 	var url = "https://movie.douban.com/top250?start=" + strconv.Itoa((idx-1)*25) + "&filter="
 
-	result, _ :=HttpGetDB(url)
+	result, _ := HttpGetDB(url)
 
 	ret := regexp.MustCompile(`<img width="100" alt="(?s:(.*?))"`)
 	filmName := ret.FindAllStringSubmatch(result, -1)
@@ -84,8 +84,8 @@ func Save2file(idx int, filmName, filmScore, filmPeople [][]string) {
 	defer f.Close()
 
 	n := len(filmName)
-	f.WriteString("电影名称" + "\t\t\t" + "评分" + "\t\t\t" + "人数")
+	f.WriteString("电影名称" + "\t\t\t" + "评分" + "\t\t\t" + "人数" + "\n")
 	for i := 0; i < n; i++ {
-		f.WriteString(filmName[i][1] + "\t\t\t" + filmScore[i][1] + "\t\t\t" + filmPeople[i][1])
+		f.WriteString(filmName[i][1] + "\t\t\t" + filmScore[i][1] + "\t\t\t" + filmPeople[i][1] + "\n")
 	}
 }
