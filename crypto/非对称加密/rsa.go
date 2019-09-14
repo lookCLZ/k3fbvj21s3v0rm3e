@@ -118,9 +118,9 @@ func Hash() {
 	hash:=sha256.New()
 	// 添加数据
 	src:=[]byte("天龙八部")
-	// hash.Write(src)
+	hash.Write(src)
 	// 
-	res:=hash.Sum(src)
+	res:=hash.Sum(nil)
 	fmt.Println(res)
 	str:=hex.EncodeToString(res)
 	fmt.Println(str)
