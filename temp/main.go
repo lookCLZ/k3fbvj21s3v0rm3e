@@ -1,22 +1,27 @@
 package main
 
 import (
-	// "bytes"
 	"fmt"
-	"crypto/md5"
-	"crypto/sha256"
+	"time"
+
+	"github.com/EDDYCJY/gsema"
 )
 
-func main() {
-	str:="天龙八部"
-	hash:=md5.New()
-	hash.Write([]byte(str))
-	hash.Write([]byte(str))
+var sema = gsema.NewSemaphore(3)
 
-	result:=hash.Sum(nil)
-	res:=fmt.Sprintf("%x",result)
-	fmt.Println(res)
-	result2:=sha256.Sum256([]byte(str))
-	res2:=fmt.Sprintf("%x",result2)
-	fmt.Println(res2)
+func main() {
+	userCount := 10
+	for i := 0; i < userCount; i++ {
+		go Read(i)
+	}
+
+	sema.Wait()
+}
+
+func Read(i int) {
+	defer sema.Done()
+	sema.Add(1)
+
+	fmt.Printf("go func: %d, time: %d\n", i, time.Now().Unix())
+	time.Sleep(time.Second)
 }
