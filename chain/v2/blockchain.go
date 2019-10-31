@@ -16,7 +16,7 @@ func NewBlockChain() *BlockChain {
 
 // 创世块函数
 func GenesisBlock() *Block{
-	return NewBlock("GO一期创世块，老牛逼了!")
+	return NewBlock("GO一期创世块，老牛逼了!",[]byte{})
 }
 
 // 添加区块
@@ -28,5 +28,5 @@ func (bc *BlockChain) AddBlock(data string) {
 	// 创建新的区块
 	block:=NewBlock(data,preHash)
 	// 将新的区块拼接到末尾
-	bc.block = append(bc.blocks,block)
+	bc.blocks = append(bc.blocks,block)
 }

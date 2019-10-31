@@ -44,3 +44,28 @@ func Uint64ToByte(num uint64) []byte {
 	*********/
 	return buffer.Bytes()
 }
+
+// 创建区块
+func NewBlock(data string,prevBlockHash []byte) *Block{
+	block:=Block{
+		Version: 00,
+		PrevHash: prevBlockHash,
+		MerkelRoot: []byte{},
+		TimeStamp: uint64(time.Now().Unix()),
+		Difficulty: 0,
+		Nonce: 0,
+		Hash: []byte{},
+		Data: []byte(data),
+	}
+
+	// 创建pow对象
+	pow:=NewProofOfWork(&block)
+	// 查找随机数，不停的进行hash运算
+	hash,nonce:=pow.Run()
+
+	// 根据挖矿的结果对区块数据进行更新
+	block.Hash = hash 
+	block.Nonce = nonce 
+
+	return &block
+}
