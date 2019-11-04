@@ -11,9 +11,9 @@ func main() {
 	bc.AddBlock("班长又向班花转了50枚比特币")
 	// 遍历这个区块链
 	for i, block := range bc.blocks {
-		fmt.Println("=======当前区块高度：%d========\n", i)
-		fmt.Println("前一个区块哈希值：%\n", block.PrevHash)
-		fmt.Println("当前区块哈希值：%s\n", block.Data)
-		fmt.Println("区块数据：%s\n", block.Data)
+		fmt.Printf("=======当前区块高度：%d========\n", i)
+		fmt.Printf("前一个区块哈希值：%x\n", block.PrevHash)
+		fmt.Printf("当前区块哈希值：%x\n", block.Data)
+		fmt.Printf("区块数据：%s\n", block.Data)
 	}
 }
