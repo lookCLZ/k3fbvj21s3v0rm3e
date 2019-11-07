@@ -22,4 +22,33 @@ func main() {
 	var temp []int 
 	temp=append(temp,3)
 	fmt.Println(temp)
+
+	mmm:=testahan()
+	fmt.Println(mmm)
+	fmt.Println(*mmm)
+
+	const (
+		AutyTypeIdentity int = iota + 1 // 身份证
+		AuthTypePassport int = iota              // 护照
+		AuthTypePassport1 int = iota + 1
+		AuthTypePassport2 int = iota
+	)
+
+	const bvb int = iota
+	const bvb1 int = iota
+	const bvb2 int = iota
+
+	fmt.Println(AutyTypeIdentity)
+	fmt.Println(AuthTypePassport)
+	fmt.Println(AuthTypePassport1)
+	fmt.Println(AuthTypePassport2)
+	fmt.Println(bvb)
+	fmt.Println(bvb1)
+	fmt.Println(bvb2)
+}
+
+func testahan() *int {
+	var a int 
+	a = 2
+	return &a
 }
