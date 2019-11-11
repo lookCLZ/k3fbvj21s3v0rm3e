@@ -13,4 +13,5 @@ require (
 	github.com/sirupsen/logrus v1.4.2
 	golang.org/x/net v0.0.0-20190916140828-c8589233b77d
 	google.golang.org/grpc v1.23.1
+	nanomsg.org/go/mangos/v2 v2.0.2
 )

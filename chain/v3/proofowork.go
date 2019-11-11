@@ -27,6 +27,10 @@ func NewProofOfWork(block *Block)*ProofOfWork{
 	return &pow
 }
 
+func Uint64ToByte() {
+	
+}
+
 func (pow *ProofOfWork) Run() ([]byte,uint64){
 	var nonce uint64 
 	block:=pow.block 
