@@ -27,7 +27,7 @@ func (cli *CLI) Run() {
 	cmd := args[1]
 	switch cmd {
 	case "addBlock":
-		fmt.Println("添加区块\n")
+		fmt.Println("添加区块")
 		if len(args) == 4 && args[2] == "--data" {
 			data := args[3]
 			cli.AddBlock(data)

@@ -27,10 +27,6 @@ func NewProofOfWork(block *Block)*ProofOfWork{
 	return &pow
 }
 
-func Uint64ToByte() {
-	
-}
-
 func (pow *ProofOfWork) Run() ([]byte,uint64){
 	var nonce uint64 
 	block:=pow.block 
@@ -51,6 +47,7 @@ func (pow *ProofOfWork) Run() ([]byte,uint64){
 		blockInfo:=bytes.Join(tmp,[]byte{})
 
 		hash = sha256.Sum256(blockInfo)
+		tmpInt:=big.Int{}
 		tmpInt.SetBytes(hash[:])
 
 		if tmpInt.Cmp(pow.target) == -1 {

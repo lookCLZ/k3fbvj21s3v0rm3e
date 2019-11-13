@@ -52,7 +52,7 @@ func (bc *BlockChain) AddBlock(data string){
 	db:=bc.db 
 	lastHash:=bc.tail 
 
-	db.Update(func(tx *blot.Tx)error{
+	db.Update(func(tx *bolt.Tx)error{
 		bucket:=tx.Bucket([]byte(blockBucket))
 		if bucket == nil{
 			log.Panic("bucket 不应该为空，请检查")
