@@ -24,5 +24,12 @@ func (it *BlockChainIterator) Next() *Block{
 		if bucket == nil{
 			log.Panic("迭代器遍历时bucket不应该为空")
 		}
+		blockTmp:=bucket.Get(it.currentHashPointer)
+		block=Deserialize(blockTmp)
+		it.currentHashPointer=block.PrevHash
+
+		return nil
 	})
+
+	return &block
 }
