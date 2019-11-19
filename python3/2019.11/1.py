@@ -40,3 +40,34 @@ print('你好，%s%s'%('日本','韩国'))
 print('%1d-%3d' % (3,1))
 print('age:%s gender:%s %%'%(25,True))
 print('hello,{0},成绩提升了{1:.1f}%'.format('小明',17.125))
+abs(7)
+
+def myfunc(x):
+    if x>=0:
+        print("x大于0")
+    else:
+        print("x不大于0")
+# myfunc("b")
+
+def absx(x):
+    if not isinstance(x,(int,float)):
+        raise TypeError('bad operand type')
+    if x >= 0:
+        print("llll")
+    return 1,1
+x,y=absx(9)
+print(x,y)
+
+def power(x,n=2):
+    s=1
+    while n>0:
+        s=s*x
+        n=n-1
+    return s
+
+print(power(n=3,x=2))
+
+def calc(*numbers):
+    print(numbers)
+
+calc(1,3,4,5,6)
