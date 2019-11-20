@@ -14,9 +14,16 @@ from datetime import datetime
 
 
 def index(request):
-    return web.Response(body=b'<h1>Awesome</h1>')
+    return web.Response(body=b'<h1>awefont</h1>',content_type="text/html")
 
-app = web.Application()
-app.add_routes([web.get('/', index)])
+@asyncio.coroutine
+def init(loop):
+    app = web.Application(loop=loop)
+    app.router.add_route('GET', '/', index)
+    srv = yield from loop.create_server(app.make_handler(), '127.0.0.1', 9000)
+    logging.info('服务已启动： http://127.0.0.1:9000')
+    return srv
 
-web.run_app(app)
+loop = asyncio.get_event_loop()
+loop.run_until_complete(init(loop))
+loop.run_forever()
