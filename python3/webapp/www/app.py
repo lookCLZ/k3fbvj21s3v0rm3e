@@ -1,22 +1,22 @@
+#!/usr/local/bin/python3
 __author__ = 'Hongrui'
+import sys
+sys.path.append('/usr/local/lib/python3.7/site-packages')
+
 import logging;logging.basicConfig(level=logging.INFO)
 
 import asyncio,os,json,time
+from aiohttp import web
+
+
 from datetime import datetime
 
-from aiohttp import web 
+
 
 def index(request):
     return web.Response(body=b'<h1>Awesome</h1>')
 
-@asyncio.coroutine 
-def init(loop):
-    app = web.Application(loop=loop)
-    app.router.add_route('GET','/',index)
-    srv=yield from loop.create_server(app.make_handler(),'127.0.0.1',9000)
-    logging.info('启动服务 ：9090')
-    return srv
+app = web.Application()
+app.add_routes([web.get('/', index)])
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(int(loop))
-loop.run_forever()
+web.run_app(app)
