@@ -120,20 +120,34 @@ func (bc *BlockChain) FindNeedUTXOs(from string, amount float64) (map[string][]u
 			}
 		}
 	}
-	return utxos, calc	
+	return utxos, calc
 }
 
-func (bc *BlockChain)FindUTXOTransactions(address string) []*Transaction{
-	var txs []*Transaction 
-	spentOutputs:=make(map[string][]int64)
+func (bc *BlockChain) FindUTXOTransactions(address string) []*Transaction {
+	var txs []*Transaction
+	spentOutputs := make(map[string][]int64)
 
-	it:=bc.NewIterator() 
+	it := bc.NewIterator()
 	for {
-		block:=it.Next() 
-		for _,tx:=range block.Transactions{
-			OUTPUT:
-			for i,output:=range tx.TXOutputs{
-				if spe
+		block := it.Next()
+		for _, tx := range block.Transactions {
+		OUTPUT:
+			for i, output := range tx.TXOutputs {
+				if spentOutputs[string(tx.TXID)] != nil {
+					for _, j := range spentOutputs[string(tx.TXID)] {
+						if int64(i) == j {
+							continue OUTPUT
+						}
+					}
+				}
+
+				if output.PubKeyHash == address{
+					txs=append(txs,tx)
+				}
+
+				if !tx.IsCoinbase() {
+					for
+				}
 			}
 		}
 	}
