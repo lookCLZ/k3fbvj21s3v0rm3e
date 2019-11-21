@@ -129,6 +129,12 @@ func (bc *BlockChain)FindUTXOTransactions(address string) []*Transaction{
 
 	it:=bc.NewIterator() 
 	for {
-		
+		block:=it.Next() 
+		for _,tx:=range block.Transactions{
+			OUTPUT:
+			for i,output:=range tx.TXOutputs{
+				if spe
+			}
+		}
 	}
 }
