@@ -15,4 +15,8 @@ func main() {
 
 	data := buffer.Bytes()
 	fmt.Println(string(data))
+
+	var datau uint
+	datau = 0
+	fmt.Println(datau)
 }

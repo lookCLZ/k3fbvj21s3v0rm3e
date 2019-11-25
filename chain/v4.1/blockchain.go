@@ -86,8 +86,10 @@ func (bc *BlockChain) Printchain() {
 	})
 }
 
+// 查找utxo
 func (bc *BlockChain) FindUTXOs(address string) []TXOutput {
 	var UTXO []TXOutput
+	// 查找含utxo的交易
 	txs := bc.FindUTXOTransactions(address)
 	for _, tx := range txs {
 		for _, output := range tx.TXOutputs {
@@ -99,6 +101,7 @@ func (bc *BlockChain) FindUTXOs(address string) []TXOutput {
 	return UTXO
 }
 
+// 找到需要的utxo
 func (bc *BlockChain) FindNeedUTXOs(from string, amount float64) (map[string][]uint64, float64) {
 	utxos := make(map[string][]uint64)
 	var calc float64
@@ -123,8 +126,10 @@ func (bc *BlockChain) FindNeedUTXOs(from string, amount float64) (map[string][]u
 	return utxos, calc
 }
 
+// 查找含有utxo的交易
 func (bc *BlockChain) FindUTXOTransactions(address string) []*Transaction {
 	var txs []*Transaction
+	// 消费过的output
 	spentOutputs := make(map[string][]int64)
 
 	it := bc.NewIterator()
@@ -141,14 +146,21 @@ func (bc *BlockChain) FindUTXOTransactions(address string) []*Transaction {
 					}
 				}
 
-				if output.PubKeyHash == address{
-					txs=append(txs,tx)
+				if output.PubKeyHash == address {
+					txs = append(txs, tx)
 				}
 
 				if !tx.IsCoinbase() {
-					for
+					for _, input := range tx.TXInputs {
+						if input.Sig == address {
+							spentOutputs[string(input.TXid)] = append(spentOutputs[string(input.TXid)], input.Index)
+						}
+					}
+				} else {
+
 				}
 			}
+			return txs
 		}
 	}
 }
