@@ -1,22 +1,22 @@
 package main
 
 import (
-	"bytes"
-	"encoding/gob"
 	"fmt"
+	"net/http"
+	"os"
 )
 
+const port = "8000"
+
 func main() {
-	var buffer bytes.Buffer
-	var content = "你好"
+	msg := "Starting main"
+	a := 22
 
-	encoder := gob.NewEncoder(&buffer)
-	encoder.Encode(content)
+	fmt.Println(msg)
+	fmt.Println(a)
+}
 
-	data := buffer.Bytes()
-	fmt.Println(string(data))
-
-	var datau uint
-	datau = 0
-	fmt.Println(datau)
+func hi(w http.ResponseWriter, r *http.Request) {
+	hostName, _ := os.Hostname()
+	fmt.Fprintf(w, "HostName: %s", hostName)
 }
