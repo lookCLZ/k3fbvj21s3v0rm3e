@@ -85,12 +85,11 @@ def data_factory(app, handler):
         return (yield from handler(request))
     return parse_data
 
-@asyncio.coroutine
-def response_factory(app, handler):
-    @asyncio.coroutine
-    def response(request):
+
+async def response_factory(app, handler):
+    async def response(request):
         logging.info('Response handler...')
-        r = yield from handler(request)
+        r = await handler(request)
         if isinstance(r, web.StreamResponse):
             return r
         if isinstance(r, bytes):

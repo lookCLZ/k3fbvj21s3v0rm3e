@@ -1,17 +1,55 @@
 /*
  * custom css
  */
-a:hover, a:active {
-    text-decoration: none;
+a:hover,
+a:active {
+  text-decoration: none;
 }
 
 #vm {
-    display: none;
+  display: none;
 }
 #loading {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 #error {
-    display: none;
-    margin-bottom: 15px;
+  display: none;
+  margin-bottom: 15px;
+}
+
+/* header */
+.uk-navbar {
+  color: #fff;
+  border: none;
+  background: #08bf91;
+}
+.uk-navbar * {
+  text-shadow: none !important;
+}
+.uk-navbar a {
+  color: #fff;
+}
+
+.uk-navbar ul li a {
+  color: #fff;
+}
+
+.uk-navbar-nav > li.uk-active > a {
+  background: none;
+  box-shadow:none;
+  border:none;
+  color:unset;
+}
+
+.uk-navbar-brand:hover, .uk-navbar-brand:focus{
+    color:#fff;
+}
+
+.uk-navbar-nav>li:hover>a, .uk-navbar-nav>li>a:focus, .uk-navbar-nav>li.uk-open>a{
+    color:#fff;
+}
+
+.uk-navbar-nav>li:hover>a, .uk-navbar-nav>li>a:focus, .uk-navbar-nav>li.uk-open>a{
+    border:none;
+    box-shadow: none;
 }
