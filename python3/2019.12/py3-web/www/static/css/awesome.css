@@ -1,6 +1,7 @@
-/*
- * custom css
- */
+body{
+  background: rgb(241, 222, 233);
+}
+
 a:hover,
 a:active {
   text-decoration: none;
@@ -21,7 +22,9 @@ a:active {
 .uk-navbar {
   color: #fff;
   border: none;
-  background: #08bf91;
+  /* background: #08bf91; */
+  background:linear-gradient(-30deg,#ffa84b 0, #ffa84b 10px,#ffb668 10px,#ffb668 20px);
+  animation: move 5s linear infinite;
 }
 .uk-navbar * {
   text-shadow: none !important;
@@ -52,4 +55,14 @@ a:active {
 .uk-navbar-nav>li:hover>a, .uk-navbar-nav>li>a:focus, .uk-navbar-nav>li.uk-open>a{
     border:none;
     box-shadow: none;
+}
+
+
+
+/* 侧边 */
+.pub-article{
+  width:100%;
+  height: 30px;
+  color:#fff;
+  background:radial-gradient(#08bf91, rgb(241, 222, 233));
 }
