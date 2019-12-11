@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__author__ = 'Michael Liao'
+__author__ = 'Liuhongrui'
 
 ' url handlers '
 
@@ -107,6 +107,12 @@ def get_blog(id):
 def register():
     return {
         '__template__': 'register.html'
+    }
+
+@get('/kanjiahuodong')
+def register():
+    return {
+        '__template__': 'kanjiahuodong.html'
     }
 
 @get('/signin')

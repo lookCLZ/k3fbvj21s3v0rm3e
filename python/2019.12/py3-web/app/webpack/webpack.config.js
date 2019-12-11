@@ -10,7 +10,7 @@ module.exports = [
     devtool: 'cheap-module-source-map',
     entry: commonConfig.entries.jsEntries,
     output: {
-      path: path.resolve(__dirname, '../../static'),
+      path: path.resolve(__dirname, '../../www/app_static'),
       filename: '[name].js'
     },
     module: {
@@ -59,7 +59,7 @@ module.exports = [
     devtool: 'cheap-module-source-map',
     entry: commonConfig.entries.cssEntries,
     output: {
-      path: path.resolve(__dirname, '../../static'),
+      path: path.resolve(__dirname, '../../www/app_static'),
       filename: '[name].css'
     },
     module: {
@@ -98,7 +98,7 @@ module.exports = [
       new CopyWebpackPlugin([
         {
           from: './img',
-          to: '../static/img'
+          to: '../www/app_static/img'
         }
       ])
     ]
