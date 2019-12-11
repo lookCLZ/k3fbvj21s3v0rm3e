@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page">
       <router-view></router-view>
       <Start/>
   </div>
@@ -15,5 +15,7 @@ export default {
 </script>
 
 <style>
-
+.page{
+  height:100%;
+}
 </style>

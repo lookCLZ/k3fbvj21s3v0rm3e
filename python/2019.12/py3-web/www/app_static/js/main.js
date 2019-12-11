@@ -86,6 +86,28 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./img/avatar.jpg":
+/*!************************!*\
+  !*** ./img/avatar.jpg ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/app_static/img/avatar.a967683b.jpg";
+
+/***/ }),
+
+/***/ "./img/start-img.jpeg":
+/*!****************************!*\
+  !*** ./img/start-img.jpeg ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/app_static/img/start-img.3ace3114.jpeg";
+
+/***/ }),
+
 /***/ "./js/app.vue":
 /*!********************!*\
   !*** ./js/app.vue ***!
@@ -279,6 +301,118 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -296,7 +430,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.kanjia-ban[data-v-a0f7d1c2] {\n  margin: 0 auto;\n  width: 9.2rem;\n  display: flex;\n  background: #8be944;\n  border-radius: 0.5rem;\n  position: relative;\n  overflow: hidden;\n}\n.kanjia-ban .logo[data-v-a0f7d1c2] {\n    width: 3rem;\n    height: 2.3rem;\n    margin: 0.25rem;\n}\n.kanjia-ban .text[data-v-a0f7d1c2] {\n    margin: 0.25rem;\n    font-size: 0.4rem;\n    color: #000000;\n}\n.kanjia-ban .text .title[data-v-a0f7d1c2] {\n      font-size: 0.5rem;\n      color: #298423;\n}\n.kanjia-ban .text .old-price[data-v-a0f7d1c2] {\n      text-decoration: line-through;\n}\n.kanjia-ban .text .new-price[data-v-a0f7d1c2] {\n      color: red;\n}\n.kanjia-ban .text button[data-v-a0f7d1c2] {\n      position: absolute;\n      right: 0.5rem;\n      bottom: 0.5rem;\n}\n", "", {"version":3,"sources":["/Users/liuhongrui/heima/contacts/python/2019.12/py3-web/app/js/pages/start.vue"],"names":[],"mappings":";AAAA;EACE,eAAe;EACf,cAAc;EACd,cAAc;EACd,oBAAoB;EACpB,sBAAsB;EACtB,mBAAmB;EACnB,iBAAiB;CAAE;AACnB;IACE,YAAY;IACZ,eAAe;IACf,gBAAgB;CAAE;AACpB;IACE,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;CAAE;AACjB;MACE,kBAAkB;MAClB,eAAe;CAAE;AACnB;MACE,8BAA8B;CAAE;AAClC;MACE,WAAW;CAAE;AACf;MACE,mBAAmB;MACnB,cAAc;MACd,eAAe;CAAE","file":"start.vue","sourcesContent":[".kanjia-ban {\n  margin: 0 auto;\n  width: 9.2rem;\n  display: flex;\n  background: #8be944;\n  border-radius: 0.5rem;\n  position: relative;\n  overflow: hidden; }\n  .kanjia-ban .logo {\n    width: 3rem;\n    height: 2.3rem;\n    margin: 0.25rem; }\n  .kanjia-ban .text {\n    margin: 0.25rem;\n    font-size: 0.4rem;\n    color: #000000; }\n    .kanjia-ban .text .title {\n      font-size: 0.5rem;\n      color: #298423; }\n    .kanjia-ban .text .old-price {\n      text-decoration: line-through; }\n    .kanjia-ban .text .new-price {\n      color: red; }\n    .kanjia-ban .text button {\n      position: absolute;\n      right: 0.5rem;\n      bottom: 0.5rem; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.start[data-v-a0f7d1c2] {\n  position: relative;\n  height: 100vh;\n  background-size: contain;\n  background-repeat: no-repeat;\n  background-color: #fec300;\n  overflow: scroll;\n}\n.start .banner[data-v-a0f7d1c2] {\n    position: fixed;\n    width: 100%;\n    z-index: 9;\n}\n.kanjia-ban[data-v-a0f7d1c2] {\n  z-index: 9;\n  margin: 0 auto;\n  width: 8.6rem;\n  display: flex;\n  background: #c8dce6;\n  border-radius: 0.5rem;\n  overflow: hidden;\n  position: fixed;\n  top: 6.2rem;\n  left: 50%;\n  transform: translateX(-50%);\n}\n.kanjia-ban .logo[data-v-a0f7d1c2] {\n    width: 2.5rem;\n    height: 1.9rem;\n    margin-left: 0.28rem;\n    margin-top: 0.46rem;\n}\n.kanjia-ban .text[data-v-a0f7d1c2] {\n    margin: 0.25rem;\n    font-size: 0.4rem;\n    color: #000000;\n}\n.kanjia-ban .text .title[data-v-a0f7d1c2] {\n      font-size: 0.5rem;\n      color: #298423;\n}\n.kanjia-ban .text .old-price[data-v-a0f7d1c2] {\n      text-decoration: line-through;\n}\n.kanjia-ban .text .new-price[data-v-a0f7d1c2] {\n      color: red;\n}\n.kanjia-ban .text button[data-v-a0f7d1c2] {\n      position: absolute;\n      right: 0.3rem;\n      bottom: 0.5rem;\n      background: red;\n      border-radius: 0.4rem;\n      color: #fff;\n      width: 2.1rem;\n      line-height: 0.8rem;\n      font-size: 0.4rem;\n}\nh3[data-v-a0f7d1c2] {\n  position: fixed;\n  text-align: center;\n  width: 100%;\n  z-index: 8;\n  top: 9rem;\n  display: block;\n  background: #fec300;\n  margin: 0;\n  padding: 0.45rem 0 0.3rem;\n}\n.rank[data-v-a0f7d1c2] {\n  text-align: center;\n  position: absolute;\n  top: 10.1rem;\n  height: calc(100% - pxToRem(910));\n  left: 50%;\n  transform: translateX(-50%);\n}\n.rank .list[data-v-a0f7d1c2] {\n    width: 8.6rem;\n    margin: 0 auto;\n    padding: 0;\n    justify-content: space-around;\n}\n.rank .list li[data-v-a0f7d1c2] {\n      list-style: none;\n      height: 1.6rem;\n      border-bottom: 1px dotted red;\n}\n.rank .list li[data-v-a0f7d1c2]:last-child {\n        border: 0;\n}\n.rank .list li img[data-v-a0f7d1c2] {\n        width: 1.2rem;\n        border-radius: 50%;\n        vertical-align: middle;\n}\n.rank .list li span[data-v-a0f7d1c2] {\n        display: inline-block;\n        vertical-align: middle;\n        margin: 0 0.8rem;\n        font-size: 0.38rem;\n        line-height: 1.6rem;\n        height: 100%;\n}\n.rank .list li span[data-v-a0f7d1c2]:nth-child(1) {\n          margin-left: 0;\n}\n.rank .list li span[data-v-a0f7d1c2]:nth-child(3) {\n          margin-right: 0;\n}\n.rank .zuzhi[data-v-a0f7d1c2] {\n    margin: 0.4rem;\n}\n", "", {"version":3,"sources":["/Users/liuhongrui/heima/contacts/python/2019.12/py3-web/app/js/pages/start.vue"],"names":[],"mappings":";AAAA;EACE,mBAAmB;EACnB,cAAc;EACd,yBAAyB;EACzB,6BAA6B;EAC7B,0BAA0B;EAC1B,iBAAiB;CAAE;AACnB;IACE,gBAAgB;IAChB,YAAY;IACZ,WAAW;CAAE;AAEjB;EACE,WAAW;EACX,eAAe;EACf,cAAc;EACd,cAAc;EACd,oBAAoB;EACpB,sBAAsB;EACtB,iBAAiB;EACjB,gBAAgB;EAChB,YAAY;EACZ,UAAU;EACV,4BAA4B;CAAE;AAC9B;IACE,cAAc;IACd,eAAe;IACf,qBAAqB;IACrB,oBAAoB;CAAE;AACxB;IACE,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;CAAE;AACjB;MACE,kBAAkB;MAClB,eAAe;CAAE;AACnB;MACE,8BAA8B;CAAE;AAClC;MACE,WAAW;CAAE;AACf;MACE,mBAAmB;MACnB,cAAc;MACd,eAAe;MACf,gBAAgB;MAChB,sBAAsB;MACtB,YAAY;MACZ,cAAc;MACd,oBAAoB;MACpB,kBAAkB;CAAE;AAE1B;EACE,gBAAgB;EAChB,mBAAmB;EACnB,YAAY;EACZ,WAAW;EACX,UAAU;EACV,eAAe;EACf,oBAAoB;EACpB,UAAU;EACV,0BAA0B;CAAE;AAE9B;EACE,mBAAmB;EACnB,mBAAmB;EACnB,aAAa;EACb,kCAAkC;EAClC,UAAU;EACV,4BAA4B;CAAE;AAC9B;IACE,cAAc;IACd,eAAe;IACf,WAAW;IACX,8BAA8B;CAAE;AAChC;MACE,iBAAiB;MACjB,eAAe;MACf,8BAA8B;CAAE;AAChC;QACE,UAAU;CAAE;AACd;QACE,cAAc;QACd,mBAAmB;QACnB,uBAAuB;CAAE;AAC3B;QACE,sBAAsB;QACtB,uBAAuB;QACvB,iBAAiB;QACjB,mBAAmB;QACnB,oBAAoB;QACpB,aAAa;CAAE;AACf;UACE,eAAe;CAAE;AACnB;UACE,gBAAgB;CAAE;AAC1B;IACE,eAAe;CAAE","file":"start.vue","sourcesContent":[".start {\n  position: relative;\n  height: 100vh;\n  background-size: contain;\n  background-repeat: no-repeat;\n  background-color: #fec300;\n  overflow: scroll; }\n  .start .banner {\n    position: fixed;\n    width: 100%;\n    z-index: 9; }\n\n.kanjia-ban {\n  z-index: 9;\n  margin: 0 auto;\n  width: 8.6rem;\n  display: flex;\n  background: #c8dce6;\n  border-radius: 0.5rem;\n  overflow: hidden;\n  position: fixed;\n  top: 6.2rem;\n  left: 50%;\n  transform: translateX(-50%); }\n  .kanjia-ban .logo {\n    width: 2.5rem;\n    height: 1.9rem;\n    margin-left: 0.28rem;\n    margin-top: 0.46rem; }\n  .kanjia-ban .text {\n    margin: 0.25rem;\n    font-size: 0.4rem;\n    color: #000000; }\n    .kanjia-ban .text .title {\n      font-size: 0.5rem;\n      color: #298423; }\n    .kanjia-ban .text .old-price {\n      text-decoration: line-through; }\n    .kanjia-ban .text .new-price {\n      color: red; }\n    .kanjia-ban .text button {\n      position: absolute;\n      right: 0.3rem;\n      bottom: 0.5rem;\n      background: red;\n      border-radius: 0.4rem;\n      color: #fff;\n      width: 2.1rem;\n      line-height: 0.8rem;\n      font-size: 0.4rem; }\n\nh3 {\n  position: fixed;\n  text-align: center;\n  width: 100%;\n  z-index: 8;\n  top: 9rem;\n  display: block;\n  background: #fec300;\n  margin: 0;\n  padding: 0.45rem 0 0.3rem; }\n\n.rank {\n  text-align: center;\n  position: absolute;\n  top: 10.1rem;\n  height: calc(100% - pxToRem(910));\n  left: 50%;\n  transform: translateX(-50%); }\n  .rank .list {\n    width: 8.6rem;\n    margin: 0 auto;\n    padding: 0;\n    justify-content: space-around; }\n    .rank .list li {\n      list-style: none;\n      height: 1.6rem;\n      border-bottom: 1px dotted red; }\n      .rank .list li:last-child {\n        border: 0; }\n      .rank .list li img {\n        width: 1.2rem;\n        border-radius: 50%;\n        vertical-align: middle; }\n      .rank .list li span {\n        display: inline-block;\n        vertical-align: middle;\n        margin: 0 0.8rem;\n        font-size: 0.38rem;\n        line-height: 1.6rem;\n        height: 100%; }\n        .rank .list li span:nth-child(1) {\n          margin-left: 0; }\n        .rank .list li span:nth-child(3) {\n          margin-right: 0; }\n  .rank .zuzhi {\n    margin: 0.4rem; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -315,7 +449,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"app.vue","sourceRoot":""}]);
+exports.push([module.i, "\n.page{\n  height:100%;\n}\n", "", {"version":3,"sources":["/Users/liuhongrui/heima/contacts/python/2019.12/py3-web/app/js/js/app.vue"],"names":[],"mappings":";AAiBA;EACA,YAAA;CACA","file":"app.vue","sourcesContent":["<template>\n  <div class=\"page\">\n      <router-view></router-view>\n      <Start/>\n  </div>\n</template>\n\n<script>\nimport Start from \"./pages/start.vue\"\nexport default {\n  components:{\n    Start\n  }\n}\n</script>\n\n<style>\n.page{\n  height:100%;\n}\n</style>"],"sourceRoot":""}]);
 
 // exports
 
@@ -1116,7 +1250,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("router-view"), _vm._v(" "), _c("Start")], 1)
+  return _c(
+    "div",
+    { staticClass: "page" },
+    [_c("router-view"), _vm._v(" "), _c("Start")],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -1147,7 +1286,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
+    return _c("div", { staticClass: "start" }, [
+      _c("img", {
+        staticClass: "banner",
+        attrs: { src: __webpack_require__(/*! ../../img/start-img.jpeg */ "./img/start-img.jpeg"), alt: "" }
+      }),
+      _vm._v(" "),
       _c("div", { staticClass: "kanjia-ban" }, [
         _c("img", {
           staticClass: "logo",
@@ -1175,6 +1319,100 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("button", [_vm._v("开始砍价")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("助力排行榜")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "rank" }, [
+        _c("ul", { staticClass: "list" }, [
+          _c("li", [
+            _c("span", [
+              _c("img", {
+                attrs: { src: __webpack_require__(/*! ../../img/avatar.jpg */ "./img/avatar.jpg"), alt: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          浪倾城\n        ")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          已砍50元\n        ")])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("span", [
+              _c("img", {
+                attrs: { src: __webpack_require__(/*! ../../img/avatar.jpg */ "./img/avatar.jpg"), alt: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          浪倾城\n        ")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          已砍50元\n        ")])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("span", [
+              _c("img", {
+                attrs: { src: __webpack_require__(/*! ../../img/avatar.jpg */ "./img/avatar.jpg"), alt: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          浪倾城\n        ")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          已砍50元\n        ")])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("span", [
+              _c("img", {
+                attrs: { src: __webpack_require__(/*! ../../img/avatar.jpg */ "./img/avatar.jpg"), alt: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          浪倾城\n        ")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          已砍50元\n        ")])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("span", [
+              _c("img", {
+                attrs: { src: __webpack_require__(/*! ../../img/avatar.jpg */ "./img/avatar.jpg"), alt: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          浪倾城\n        ")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          已砍50元\n        ")])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("span", [
+              _c("img", {
+                attrs: { src: __webpack_require__(/*! ../../img/avatar.jpg */ "./img/avatar.jpg"), alt: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          浪倾城\n        ")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          已砍50元\n        ")])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("span", [
+              _c("img", {
+                attrs: { src: __webpack_require__(/*! ../../img/avatar.jpg */ "./img/avatar.jpg"), alt: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          浪倾城\n        ")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("\n          已砍50元\n        ")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "zuzhi" }, [
+          _vm._v("\n      @成都热橙文化传播公司\n    ")
         ])
       ])
     ])
