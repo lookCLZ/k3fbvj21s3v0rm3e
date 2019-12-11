@@ -279,7 +279,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -297,7 +296,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.kanjia-ban[data-v-a0f7d1c2] {\n  width: 500px;\n  background: #8BE944;\n}\n", "", {"version":3,"sources":["/Users/liuhongrui/heima/contacts/python/2019.12/py3-web/app/js/pages/start.vue"],"names":[],"mappings":";AAAA;EACE,aAAa;EACb,oBAAoB;CAAE","file":"start.vue","sourcesContent":[".kanjia-ban {\n  width: 500px;\n  background: #8BE944; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n.kanjia-ban[data-v-a0f7d1c2] {\n  margin: 0 auto;\n  width: 9.2rem;\n  display: flex;\n  background: #8be944;\n  border-radius: 0.5rem;\n  position: relative;\n  overflow: hidden;\n}\n.kanjia-ban .logo[data-v-a0f7d1c2] {\n    width: 3rem;\n}\n.kanjia-ban .text[data-v-a0f7d1c2] {\n    margin: 0.25rem;\n    font-size: 0.4rem;\n    color: #000000;\n}\n.kanjia-ban .text .title[data-v-a0f7d1c2] {\n      font-size: 0.5rem;\n      color: #298423;\n}\n.kanjia-ban .text .old-price[data-v-a0f7d1c2] {\n      text-decoration: line-through;\n}\n.kanjia-ban .text .new-price[data-v-a0f7d1c2] {\n      color: red;\n}\n.kanjia-ban .text button[data-v-a0f7d1c2] {\n      position: absolute;\n      right: 0.5rem;\n      bottom: 0.5rem;\n}\n", "", {"version":3,"sources":["/Users/liuhongrui/heima/contacts/python/2019.12/py3-web/app/js/pages/start.vue"],"names":[],"mappings":";AAAA;EACE,eAAe;EACf,cAAc;EACd,cAAc;EACd,oBAAoB;EACpB,sBAAsB;EACtB,mBAAmB;EACnB,iBAAiB;CAAE;AACnB;IACE,YAAY;CAAE;AAChB;IACE,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;CAAE;AACjB;MACE,kBAAkB;MAClB,eAAe;CAAE;AACnB;MACE,8BAA8B;CAAE;AAClC;MACE,WAAW;CAAE;AACf;MACE,mBAAmB;MACnB,cAAc;MACd,eAAe;CAAE","file":"start.vue","sourcesContent":[".kanjia-ban {\n  margin: 0 auto;\n  width: 9.2rem;\n  display: flex;\n  background: #8be944;\n  border-radius: 0.5rem;\n  position: relative;\n  overflow: hidden; }\n  .kanjia-ban .logo {\n    width: 3rem; }\n  .kanjia-ban .text {\n    margin: 0.25rem;\n    font-size: 0.4rem;\n    color: #000000; }\n    .kanjia-ban .text .title {\n      font-size: 0.5rem;\n      color: #298423; }\n    .kanjia-ban .text .old-price {\n      text-decoration: line-through; }\n    .kanjia-ban .text .new-price {\n      color: red; }\n    .kanjia-ban .text button {\n      position: absolute;\n      right: 0.5rem;\n      bottom: 0.5rem; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -1150,20 +1149,35 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", [
       _c("div", { staticClass: "kanjia-ban" }, [
-        _c("img", { attrs: { src: "", alt: "" } }),
+        _c("img", {
+          staticClass: "logo",
+          attrs: {
+            src: "https://csdnimg.cn/pubfooter/images/edu-QR.png",
+            alt: ""
+          }
+        }),
         _vm._v(" "),
-        _c("div", [
-          _c("span", { staticClass: "title" }, [_vm._v("场地布置")]),
+        _c("div", { staticClass: "text" }, [
+          _c("span", { staticClass: "title" }, [_vm._v("场地布置场地布置")]),
           _vm._v(" "),
           _c("div", [
-            _c("span", [_vm._v("原价：1700元")]),
+            _c("div", [
+              _vm._v("原价："),
+              _c("span", { staticClass: "old-price" }, [_vm._v("1700元")])
+            ]),
             _vm._v(" "),
-            _c("span", [_vm._v("已砍价：500元")]),
+            _c("div", [
+              _vm._v("已砍价："),
+              _c("span", { staticClass: "sub-price" }, [_vm._v("500元")])
+            ]),
             _vm._v(" "),
-            _c("span", [_vm._v("现价：1200元")])
+            _c("div", [
+              _vm._v("现价："),
+              _c("span", { staticClass: "new-price" }, [_vm._v("1200元")])
+            ])
           ]),
           _vm._v(" "),
-          _c("div", [_c("button", [_vm._v("开始砍价")])])
+          _c("button", [_vm._v("开始砍价")])
         ])
       ])
     ])

@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-</head>
-<body>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      var deviceWidth = document.documentElement.clientWidth;
+      if (deviceWidth > 750) deviceWidth = 750;
+      document.documentElement.style.fontSize = deviceWidth / 7.5 + "px";
+    </script>
     <div id="app"></div>
     <script src="/app_static/js/main.js"></script>
-</body>
+  </body>
 </html>
