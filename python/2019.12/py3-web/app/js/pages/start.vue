@@ -3,7 +3,7 @@
     <div class="kanjia-ban">
       <img
         class="logo"
-        src="https://csdnimg.cn/pubfooter/images/edu-QR.png"
+        src="/app_static/img/logo.jpg"
         alt=""
       >
       <div class="text">
@@ -37,6 +37,8 @@ export default {};
   overflow: hidden;
   .logo {
     width: pxToRem(300);
+    height: pxToRem(230);
+    margin: 0.25rem;
   }
   .text {
     margin: pxToRem(25);
