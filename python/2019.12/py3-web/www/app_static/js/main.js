@@ -1412,7 +1412,7 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "zuzhi" }, [
-          _vm._v("\n      @成都热橙文化传播公司\n    ")
+          _vm._v("\n      ©成都热橙科技有限公司 2014~2020\n    ")
         ])
       ])
     ])
