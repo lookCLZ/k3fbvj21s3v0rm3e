@@ -2944,7 +2944,7 @@ var render = function() {
       _vm._m(2),
       _vm._v(" "),
       _c("div", { staticClass: "zuzhi" }, [
-        _vm._v("\n      ©成都汉月网络工作室 2014~2020\n    ")
+        _vm._v("\n      ©成都热橙工作室 2014~2020\n    ")
       ])
     ])
   ])

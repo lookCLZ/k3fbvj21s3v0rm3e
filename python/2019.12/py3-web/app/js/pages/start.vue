@@ -50,7 +50,7 @@
         <li>4.根据好友参与数量，您将获取50元到200元不等的优惠额度</li>
       </ul>
       <div class="zuzhi">
-        ©成都汉月网络工作室 2014~2020
+        ©成都热橙工作室 2014~2020
       </div>
     </div>
   </div>
@@ -60,7 +60,7 @@
 export default {
   methods:{
     shareKanJia(){
-      
+
     }
   }
 };
