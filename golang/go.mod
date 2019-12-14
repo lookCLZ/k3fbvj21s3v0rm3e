@@ -8,6 +8,7 @@ require (
 	github.com/astaxie/beego v1.12.0
 	github.com/betterjun/pkg v0.0.0-20190724144456-f230171707b2
 	github.com/boltdb/bolt v1.3.1
+	github.com/gin-gonic/gin v1.5.0 // indirect
 	github.com/golang/protobuf v1.3.2
 	github.com/shiena/ansicolor v0.0.0-20151119151921-a422bbe96644 // indirect
 	github.com/sirupsen/logrus v1.4.2

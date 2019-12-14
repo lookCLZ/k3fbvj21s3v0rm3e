@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>热橙派对-更多优惠等你来拿！</title>
     <style>
       body {
         margin: 0;
@@ -13,6 +13,13 @@
     </style>
   </head>
   <body>
+    <script>
+      if (!location.href.includes("code")) {
+        const  host  = "www.rechengparty.com";
+        const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65b975e308c72245&redirect_uri=http://${host}/kanjiahuodong&response_type=code&scope=snsapi_userinfo#wechat_redirect`;
+        location.href = url;
+      }
+    </script>
     <script>
       var deviceWidth = document.documentElement.clientWidth;
       if (deviceWidth > 750) deviceWidth = 750;

@@ -18,96 +18,15 @@
           <div>已砍价：<span class="sub-price">500元</span></div>
           <div>现价：<span class="new-price">1200元</span></div>
         </div>
-        <button>开始砍价</button>
+        <button @click="shareKanJia">分享砍价</button>
       </div>
     </div>
-    <h3>助力排行榜</h3>
+    <h3 v-if="false">助力排行榜</h3>
     <div class="rank">
-      <ul class="list">
-        <li>
-          <span>
-            <img
-              src="../../img/avatar.jpg"
-              alt=""
-            >
-          </span>
-          <span>
-            浪倾城
-          </span>
-          <span>
-            已砍50元
-          </span>
-        </li>
-        <li>
-          <span>
-            <img
-              src="../../img/avatar.jpg"
-              alt=""
-            >
-          </span>
-          <span>
-            浪倾城
-          </span>
-          <span>
-            已砍50元
-          </span>
-        </li>
-        <li>
-          <span>
-            <img
-              src="../../img/avatar.jpg"
-              alt=""
-            >
-          </span>
-          <span>
-            浪倾城
-          </span>
-          <span>
-            已砍50元
-          </span>
-        </li>
-        <li>
-          <span>
-            <img
-              src="../../img/avatar.jpg"
-              alt=""
-            >
-          </span>
-          <span>
-            浪倾城
-          </span>
-          <span>
-            已砍50元
-          </span>
-        </li>
-        <li>
-          <span>
-            <img
-              src="../../img/avatar.jpg"
-              alt=""
-            >
-          </span>
-          <span>
-            浪倾城
-          </span>
-          <span>
-            已砍50元
-          </span>
-        </li>
-        <li>
-          <span>
-            <img
-              src="../../img/avatar.jpg"
-              alt=""
-            >
-          </span>
-          <span>
-            浪倾城
-          </span>
-          <span>
-            已砍50元
-          </span>
-        </li>
+      <ul
+        class="list"
+        v-if="false"
+      >
         <li>
           <span>
             <img
@@ -123,16 +42,28 @@
           </span>
         </li>
       </ul>
+      <ul class="note">
+        <li></li>
+        <li>1.点击开始砍价,获取海报图片</li>
+        <li>2.将海报分享至朋友圈</li>
+        <li>3.好友使用微信扫描海报上的二维码，参与砍价</li>
+        <li>4.根据好友参与数量，您将获取50元到200元不等的优惠额度</li>
+      </ul>
       <div class="zuzhi">
-        ©成都热橙科技有限公司 2014~2020
+        ©成都汉月网络工作室 2014~2020
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods:{
+    shareKanJia(){
+      
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -252,8 +183,37 @@ h3 {
       }
     }
   }
+  .note {
+    margin: pxToRem(-80) 0 0;
+    padding: 0;
+    width: pxToRem(720);
+    li {
+      list-style: none;
+      color: #fff;
+      text-align: left;
+      &:first-child {
+        position: relative;
+        text-align: center;
+        display: inline-block;
+        width: 100%;
+        border-top: 1px dotted #fff;
+        &::before {
+          position: absolute;
+          content: "活动说明";
+          top: pxToRem(-30);
+          transform: translateX(-50%);
+          background: #fec300;
+          padding: 0 pxToRem(30) 0;
+        }
+      }
+      &:nth-child(2) {
+        margin-top: pxToRem(30);
+      }
+    }
+  }
   .zuzhi {
     margin: pxToRem(40);
+    color: #fff;
   }
 }
 </style>
