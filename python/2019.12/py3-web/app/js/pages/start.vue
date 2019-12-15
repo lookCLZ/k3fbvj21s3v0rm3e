@@ -1,6 +1,6 @@
 <template>
   <div class="start">
-    <audio id="audioPlay" src="/app_static/img/mu.mp3" autoplay="autoplay"></audio>
+    <audio id="audioPlay" src="https://rechengparty-dist.oss-cn-chengdu.aliyuncs.com/cache/1.mp3" autoplay="autoplay"></audio>
     <img
       class="banner"
       src="../../img/start-img.jpeg"
@@ -52,7 +52,7 @@
       </ul>
       <br>
       <div class="zuzhi">
-        ©成都热橙工作室 2014~2020
+        ©热橙派对 2014~2020
       </div>
     </div>
   </div>

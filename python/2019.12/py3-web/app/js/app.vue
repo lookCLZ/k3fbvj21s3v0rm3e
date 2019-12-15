@@ -19,7 +19,11 @@ export default {
     };
   },
   mounted() {
-    this.saveUserInfo();
+    if (!window.localStorage.getItem("rechengparty_wx_db")) {
+      this.saveUserInfo();
+    } else {
+      this.loadData();
+    }
   },
   methods: {
     getQueryString(name) {
@@ -36,7 +40,7 @@ export default {
         res = res.data;
         window.localStorage.setItem("rechengparty_wx_db", JSON.stringify(res));
         this.loadData();
-        this.setJS_SDK()
+        this.setJS_SDK();
       });
     },
     loadData() {
@@ -67,10 +71,10 @@ export default {
         jsApiList: ["playVoice"] // 必填，需要使用的JS接口列表
       });
 
-      wx.ready(function(){
-　　　　var audio = document.getElementById("audioPlay");
-　　　　audio.play()
-　　})
+      wx.ready(function() {
+        var audio = document.getElementById("audioPlay");
+        audio.play();
+      });
     }
   }
 };
