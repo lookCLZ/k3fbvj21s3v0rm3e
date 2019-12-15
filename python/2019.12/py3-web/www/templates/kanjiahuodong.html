@@ -16,7 +16,7 @@
     <script>
       if (!location.href.includes("code")) {
         const  host  = "www.rechengparty.com";
-        const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65b975e308c72245&redirect_uri=http://${host}/kanjiahuodong&response_type=code&scope=snsapi_userinfo#wechat_redirect`;
+        const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65b975e308c72245&redirect_uri=http://${host}/wx/kanjiahuodong&response_type=code&scope=snsapi_userinfo#wechat_redirect`;
         location.href = url;
       }
     </script>
@@ -25,6 +25,7 @@
       if (deviceWidth > 750) deviceWidth = 750;
       document.documentElement.style.fontSize = deviceWidth / 7.5 + "px";
     </script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <div id="app"></div>
     <script src="/app_static/js/main.js"></script>
   </body>

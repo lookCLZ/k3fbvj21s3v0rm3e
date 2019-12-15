@@ -126,28 +126,44 @@ def register():
     }
 
 
-@get('/kanjiahuodong')
+# 邀请者初始页面
+@get('/wx/kanjiahuodong')
 def register():
     return {
         '__template__': 'kanjiahuodong.html'
     }
 
 # 获取微信用户信息
-@get('/wechart_user')
+@get('/wx/wechart_user')
 def wechart_user(*, code):
     appid = "wx65b975e308c72245"
     secret = "bf01504ce43d019e757b3183bdef9cad"
-
+    # 获取access_token
     url_for_token = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + \
         "&secret="+secret+"&code=" + code+"&grant_type=authorization_code"
     r = requests.get(url_for_token)
     rsp = json.loads(r.content)
-
-    url_for_user = "https://api.weixin.qq.com/sns/userinfo?access_token="+rsp["access_token"] +  \
+    access_token = rsp["access_token"]
+    # 获取userinfo
+    url_for_user = "https://api.weixin.qq.com/sns/userinfo?access_token="+access_token +  \
         "&openid="+rsp["openid"]+"&lang=zh_CN"
 
-    r = requests.get(url_for_user)
-    rsp = json.loads(r.content)
+    r_for_user = requests.get(url_for_user)
+    r_for_user = json.loads(r_for_user.content)
+    r_for_user["access_token"] = access_token
+    # 获取access_token，用于js-sdk （此access_token跟上面的access_token不一样）
+    url_for_access_token = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + \
+        appid+"&secret="+secret
+    r_for_access_token = requests.get(url_for_access_token)
+    r_for_access_token = json.loads(r_for_access_token.content)
+    return r_for_access_token
+    # 获取js_sdk
+    url_for_js_sdk = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + \
+        r_for_access_token["access_token"]+"&type=jsapi"
+    r_for_js_sdk = requests.get(url_for_js_sdk)
+    r_for_js_sdk = json.loads(r_for_js_sdk.content)
+
+    rsp = {"r_for_js_sdk": r_for_js_sdk, "r_for_user": r_for_user}
 
     return rsp
 

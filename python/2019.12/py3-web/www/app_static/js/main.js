@@ -1938,7 +1938,9 @@ module.exports = function isBuffer(obj) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _pages_start_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/start.vue */ "./js/pages/start.vue");
+/* harmony import */ var js_sha1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! js-sha1 */ "./node_modules/js-sha1/src/sha1.js");
+/* harmony import */ var js_sha1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(js_sha1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _pages_start_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/start.vue */ "./js/pages/start.vue");
 //
 //
 //
@@ -1946,23 +1948,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Start: _pages_start_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Start: _pages_start_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data() {
-    return {};
+    return {
+      wxInfo: {}
+    };
   },
   mounted() {
-    console.log(this.getQueryString("code"));
-    let url = "/wechart_user?code=" + this.getQueryString("code");
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(res => {
-      res = res.data;
-      window.localStorage.setItem("rechengparty_user", JSON.stringify(res));
-    });
+    this.saveUserInfo();
   },
   methods: {
     getQueryString(name) {
@@ -1972,6 +1972,48 @@ __webpack_require__.r(__webpack_exports__);
         return unescape(r[2]);
       }
       return null;
+    },
+    saveUserInfo() {
+      let url = "/wx/wechart_user?code=" + this.getQueryString("code");
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(res => {
+        res = res.data;
+        window.localStorage.setItem("rechengparty_wx_db", JSON.stringify(res));
+        this.loadData();
+        this.setJS_SDK();
+      });
+    },
+    loadData() {
+      let wxDb = window.localStorage.getItem("rechengparty_wx_db");
+      if (wxDb == "") {
+        alert("连接微信服务器失败，请退出当前页面，稍后再试");
+        return;
+      }
+      this.wxInfo = JSON.parse(wxDb);
+      console.log("wxDb", wxDb);
+      console.log("wxInfo", this.wxInfo);
+    },
+    setJS_SDK() {
+      let jsapi_ticket = this.wxInfo.r_for_js_sdk.ticket;
+      let noncestr = +new Date() + "";
+      let timestamp = +new Date() + "";
+      let url = window.location.href.split("#")[0];
+      let str = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
+      console.log("str", str);
+      let sha1Str = js_sha1__WEBPACK_IMPORTED_MODULE_1___default()(str);
+      console.log("sha1Str", sha1Str);
+      wx.config({
+        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: "wx65b975e308c72245", // 必填，公众号的唯一标识
+        timestamp: timestamp, // 必填，生成签名的时间戳
+        nonceStr: noncestr, // 必填，生成签名的随机串
+        signature: sha1Str, // 必填，签名
+        jsApiList: ["playVoice"] // 必填，需要使用的JS接口列表
+      });
+
+      wx.ready(function () {
+        var audio = document.getElementById("audioPlay");
+        audio.play();
+      });
     }
   }
 });
@@ -1987,6 +2029,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2066,7 +2110,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n@charset \"UTF-8\";\n.start[data-v-a0f7d1c2] {\n  position: relative;\n  height: 100vh;\n  background-size: contain;\n  background-repeat: no-repeat;\n  background-color: #fec300;\n  overflow: scroll;\n}\n.start .banner[data-v-a0f7d1c2] {\n    position: fixed;\n    width: 100%;\n    z-index: 9;\n}\n.kanjia-ban[data-v-a0f7d1c2] {\n  z-index: 9;\n  margin: 0 auto;\n  width: 8.6rem;\n  display: flex;\n  background: #c8dce6;\n  border-radius: 0.5rem;\n  overflow: hidden;\n  position: fixed;\n  top: 6.2rem;\n  left: 50%;\n  transform: translateX(-50%);\n}\n.kanjia-ban .logo[data-v-a0f7d1c2] {\n    width: 2.5rem;\n    height: 1.9rem;\n    margin-left: 0.28rem;\n    margin-top: 0.46rem;\n}\n.kanjia-ban .text[data-v-a0f7d1c2] {\n    margin: 0.25rem;\n    font-size: 0.4rem;\n    color: #000000;\n}\n.kanjia-ban .text .title[data-v-a0f7d1c2] {\n      font-size: 0.5rem;\n      color: #298423;\n}\n.kanjia-ban .text .old-price[data-v-a0f7d1c2] {\n      text-decoration: line-through;\n}\n.kanjia-ban .text .new-price[data-v-a0f7d1c2] {\n      color: red;\n}\n.kanjia-ban .text button[data-v-a0f7d1c2] {\n      position: absolute;\n      right: 0.3rem;\n      bottom: 0.5rem;\n      background: red;\n      border-radius: 0.4rem;\n      color: #fff;\n      width: 2.1rem;\n      line-height: 0.8rem;\n      font-size: 0.4rem;\n}\nh3[data-v-a0f7d1c2] {\n  position: fixed;\n  text-align: center;\n  width: 100%;\n  z-index: 8;\n  top: 9rem;\n  display: block;\n  background: #fec300;\n  margin: 0;\n  padding: 0.45rem 0 0.3rem;\n}\n.rank[data-v-a0f7d1c2] {\n  text-align: center;\n  position: absolute;\n  top: 10.1rem;\n  height: calc(100% - pxToRem(910));\n  left: 50%;\n  transform: translateX(-50%);\n}\n.rank .list[data-v-a0f7d1c2] {\n    width: 8.6rem;\n    margin: 0 auto;\n    padding: 0;\n    justify-content: space-around;\n}\n.rank .list li[data-v-a0f7d1c2] {\n      list-style: none;\n      height: 1.6rem;\n      border-bottom: 1px dotted red;\n}\n.rank .list li[data-v-a0f7d1c2]:last-child {\n        border: 0;\n}\n.rank .list li img[data-v-a0f7d1c2] {\n        width: 1.2rem;\n        border-radius: 50%;\n        vertical-align: middle;\n}\n.rank .list li span[data-v-a0f7d1c2] {\n        display: inline-block;\n        vertical-align: middle;\n        margin: 0 0.8rem;\n        font-size: 0.38rem;\n        line-height: 1.6rem;\n        height: 100%;\n}\n.rank .list li span[data-v-a0f7d1c2]:nth-child(1) {\n          margin-left: 0;\n}\n.rank .list li span[data-v-a0f7d1c2]:nth-child(3) {\n          margin-right: 0;\n}\n.rank .note[data-v-a0f7d1c2] {\n    margin: -0.8rem 0 0;\n    padding: 0;\n    width: 7.2rem;\n}\n.rank .note li[data-v-a0f7d1c2] {\n      list-style: none;\n      color: #fff;\n      text-align: left;\n}\n.rank .note li[data-v-a0f7d1c2]:first-child {\n        position: relative;\n        text-align: center;\n        display: inline-block;\n        width: 100%;\n        border-top: 1px dotted #fff;\n}\n.rank .note li[data-v-a0f7d1c2]:first-child::before {\n          position: absolute;\n          content: \"\\6D3B\\52A8\\8BF4\\660E\";\n          top: -0.3rem;\n          transform: translateX(-50%);\n          background: #fec300;\n          padding: 0 0.3rem 0;\n}\n.rank .note li[data-v-a0f7d1c2]:nth-child(2) {\n        margin-top: 0.3rem;\n}\n.rank .zuzhi[data-v-a0f7d1c2] {\n    margin: 0.4rem;\n    color: #fff;\n}\n", "", {"version":3,"sources":["/Users/liuhongrui/heima/contacts/python/2019.12/py3-web/app/js/pages/start.vue"],"names":[],"mappings":";AAAA,iBAAiB;AACjB;EACE,mBAAmB;EACnB,cAAc;EACd,yBAAyB;EACzB,6BAA6B;EAC7B,0BAA0B;EAC1B,iBAAiB;CAAE;AACnB;IACE,gBAAgB;IAChB,YAAY;IACZ,WAAW;CAAE;AAEjB;EACE,WAAW;EACX,eAAe;EACf,cAAc;EACd,cAAc;EACd,oBAAoB;EACpB,sBAAsB;EACtB,iBAAiB;EACjB,gBAAgB;EAChB,YAAY;EACZ,UAAU;EACV,4BAA4B;CAAE;AAC9B;IACE,cAAc;IACd,eAAe;IACf,qBAAqB;IACrB,oBAAoB;CAAE;AACxB;IACE,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;CAAE;AACjB;MACE,kBAAkB;MAClB,eAAe;CAAE;AACnB;MACE,8BAA8B;CAAE;AAClC;MACE,WAAW;CAAE;AACf;MACE,mBAAmB;MACnB,cAAc;MACd,eAAe;MACf,gBAAgB;MAChB,sBAAsB;MACtB,YAAY;MACZ,cAAc;MACd,oBAAoB;MACpB,kBAAkB;CAAE;AAE1B;EACE,gBAAgB;EAChB,mBAAmB;EACnB,YAAY;EACZ,WAAW;EACX,UAAU;EACV,eAAe;EACf,oBAAoB;EACpB,UAAU;EACV,0BAA0B;CAAE;AAE9B;EACE,mBAAmB;EACnB,mBAAmB;EACnB,aAAa;EACb,kCAAkC;EAClC,UAAU;EACV,4BAA4B;CAAE;AAC9B;IACE,cAAc;IACd,eAAe;IACf,WAAW;IACX,8BAA8B;CAAE;AAChC;MACE,iBAAiB;MACjB,eAAe;MACf,8BAA8B;CAAE;AAChC;QACE,UAAU;CAAE;AACd;QACE,cAAc;QACd,mBAAmB;QACnB,uBAAuB;CAAE;AAC3B;QACE,sBAAsB;QACtB,uBAAuB;QACvB,iBAAiB;QACjB,mBAAmB;QACnB,oBAAoB;QACpB,aAAa;CAAE;AACf;UACE,eAAe;CAAE;AACnB;UACE,gBAAgB;CAAE;AAC1B;IACE,oBAAoB;IACpB,WAAW;IACX,cAAc;CAAE;AAChB;MACE,iBAAiB;MACjB,YAAY;MACZ,iBAAiB;CAAE;AACnB;QACE,mBAAmB;QACnB,mBAAmB;QACnB,sBAAsB;QACtB,YAAY;QACZ,4BAA4B;CAAE;AAC9B;UACE,mBAAmB;UACnB,gCAAgB;UAChB,aAAa;UACb,4BAA4B;UAC5B,oBAAoB;UACpB,oBAAoB;CAAE;AAC1B;QACE,mBAAmB;CAAE;AAC3B;IACE,eAAe;IACf,YAAY;CAAE","file":"start.vue","sourcesContent":["@charset \"UTF-8\";\n.start {\n  position: relative;\n  height: 100vh;\n  background-size: contain;\n  background-repeat: no-repeat;\n  background-color: #fec300;\n  overflow: scroll; }\n  .start .banner {\n    position: fixed;\n    width: 100%;\n    z-index: 9; }\n\n.kanjia-ban {\n  z-index: 9;\n  margin: 0 auto;\n  width: 8.6rem;\n  display: flex;\n  background: #c8dce6;\n  border-radius: 0.5rem;\n  overflow: hidden;\n  position: fixed;\n  top: 6.2rem;\n  left: 50%;\n  transform: translateX(-50%); }\n  .kanjia-ban .logo {\n    width: 2.5rem;\n    height: 1.9rem;\n    margin-left: 0.28rem;\n    margin-top: 0.46rem; }\n  .kanjia-ban .text {\n    margin: 0.25rem;\n    font-size: 0.4rem;\n    color: #000000; }\n    .kanjia-ban .text .title {\n      font-size: 0.5rem;\n      color: #298423; }\n    .kanjia-ban .text .old-price {\n      text-decoration: line-through; }\n    .kanjia-ban .text .new-price {\n      color: red; }\n    .kanjia-ban .text button {\n      position: absolute;\n      right: 0.3rem;\n      bottom: 0.5rem;\n      background: red;\n      border-radius: 0.4rem;\n      color: #fff;\n      width: 2.1rem;\n      line-height: 0.8rem;\n      font-size: 0.4rem; }\n\nh3 {\n  position: fixed;\n  text-align: center;\n  width: 100%;\n  z-index: 8;\n  top: 9rem;\n  display: block;\n  background: #fec300;\n  margin: 0;\n  padding: 0.45rem 0 0.3rem; }\n\n.rank {\n  text-align: center;\n  position: absolute;\n  top: 10.1rem;\n  height: calc(100% - pxToRem(910));\n  left: 50%;\n  transform: translateX(-50%); }\n  .rank .list {\n    width: 8.6rem;\n    margin: 0 auto;\n    padding: 0;\n    justify-content: space-around; }\n    .rank .list li {\n      list-style: none;\n      height: 1.6rem;\n      border-bottom: 1px dotted red; }\n      .rank .list li:last-child {\n        border: 0; }\n      .rank .list li img {\n        width: 1.2rem;\n        border-radius: 50%;\n        vertical-align: middle; }\n      .rank .list li span {\n        display: inline-block;\n        vertical-align: middle;\n        margin: 0 0.8rem;\n        font-size: 0.38rem;\n        line-height: 1.6rem;\n        height: 100%; }\n        .rank .list li span:nth-child(1) {\n          margin-left: 0; }\n        .rank .list li span:nth-child(3) {\n          margin-right: 0; }\n  .rank .note {\n    margin: -0.8rem 0 0;\n    padding: 0;\n    width: 7.2rem; }\n    .rank .note li {\n      list-style: none;\n      color: #fff;\n      text-align: left; }\n      .rank .note li:first-child {\n        position: relative;\n        text-align: center;\n        display: inline-block;\n        width: 100%;\n        border-top: 1px dotted #fff; }\n        .rank .note li:first-child::before {\n          position: absolute;\n          content: \"活动说明\";\n          top: -0.3rem;\n          transform: translateX(-50%);\n          background: #fec300;\n          padding: 0 0.3rem 0; }\n      .rank .note li:nth-child(2) {\n        margin-top: 0.3rem; }\n  .rank .zuzhi {\n    margin: 0.4rem;\n    color: #fff; }\n"],"sourceRoot":""}]);
+exports.push([module.i, "\n@charset \"UTF-8\";\n.start[data-v-a0f7d1c2] {\n  position: relative;\n  height: 100vh;\n  background-size: contain;\n  background-repeat: no-repeat;\n  background-color: #fec300;\n  overflow: scroll;\n}\n.start .banner[data-v-a0f7d1c2] {\n    position: fixed;\n    width: 100%;\n    z-index: 9;\n}\n.kanjia-ban[data-v-a0f7d1c2] {\n  z-index: 9;\n  margin: 0 auto;\n  width: 8.6rem;\n  display: flex;\n  background: #c8dce6;\n  border-radius: 0.5rem;\n  overflow: hidden;\n  position: fixed;\n  top: 6.2rem;\n  left: 50%;\n  transform: translateX(-50%);\n}\n.kanjia-ban .logo[data-v-a0f7d1c2] {\n    width: 2.5rem;\n    height: 1.9rem;\n    margin-left: 0.28rem;\n    margin-top: 0.46rem;\n}\n.kanjia-ban .text[data-v-a0f7d1c2] {\n    margin: 0.25rem;\n    font-size: 0.4rem;\n    color: #000000;\n}\n.kanjia-ban .text .title[data-v-a0f7d1c2] {\n      font-size: 0.5rem;\n      color: #298423;\n}\n.kanjia-ban .text .old-price[data-v-a0f7d1c2] {\n      text-decoration: line-through;\n}\n.kanjia-ban .text .new-price[data-v-a0f7d1c2] {\n      color: red;\n}\n.kanjia-ban .text button[data-v-a0f7d1c2] {\n      position: absolute;\n      right: 0.3rem;\n      bottom: 0.5rem;\n      background: red;\n      border-radius: 0.4rem;\n      color: #fff;\n      width: 2.1rem;\n      line-height: 0.8rem;\n      font-size: 0.4rem;\n}\nh3[data-v-a0f7d1c2] {\n  position: fixed;\n  text-align: center;\n  width: 100%;\n  z-index: 8;\n  top: 9rem;\n  display: block;\n  background: #fec300;\n  margin: 0;\n  padding: 0.45rem 0 0.3rem;\n}\n.rank[data-v-a0f7d1c2] {\n  text-align: center;\n  position: absolute;\n  top: 10.1rem;\n  height: calc(100% - pxToRem(910));\n  left: 50%;\n  transform: translateX(-50%);\n}\n.rank .list[data-v-a0f7d1c2] {\n    width: 8.6rem;\n    margin: 0 auto;\n    padding: 0;\n    justify-content: space-around;\n}\n.rank .list li[data-v-a0f7d1c2] {\n      list-style: none;\n      height: 1.6rem;\n      border-bottom: 1px dotted red;\n}\n.rank .list li[data-v-a0f7d1c2]:last-child {\n        border: 0;\n}\n.rank .list li img[data-v-a0f7d1c2] {\n        width: 1.2rem;\n        border-radius: 50%;\n        vertical-align: middle;\n}\n.rank .list li span[data-v-a0f7d1c2] {\n        display: inline-block;\n        vertical-align: middle;\n        margin: 0 0.8rem;\n        font-size: 0.38rem;\n        line-height: 1.6rem;\n        height: 100%;\n}\n.rank .list li span[data-v-a0f7d1c2]:nth-child(1) {\n          margin-left: 0;\n}\n.rank .list li span[data-v-a0f7d1c2]:nth-child(3) {\n          margin-right: 0;\n}\n.rank .note[data-v-a0f7d1c2] {\n    margin: -0.5rem 0 0;\n    padding: 0;\n    width: 7.2rem;\n}\n.rank .note li[data-v-a0f7d1c2] {\n      list-style: none;\n      color: #fff;\n      text-align: left;\n}\n.rank .note li[data-v-a0f7d1c2]:first-child {\n        position: relative;\n        text-align: center;\n        display: inline-block;\n        width: 100%;\n        border-top: 1px dotted #fff;\n}\n.rank .note li[data-v-a0f7d1c2]:first-child::before {\n          position: absolute;\n          content: \"\\6D3B\\52A8\\8BF4\\660E\";\n          top: -0.3rem;\n          transform: translateX(-50%);\n          background: #fec300;\n          padding: 0 0.3rem 0;\n}\n.rank .note li[data-v-a0f7d1c2]:nth-child(2) {\n        margin-top: 0.3rem;\n}\n.rank .zuzhi[data-v-a0f7d1c2] {\n    margin: 0.4rem;\n    color: #fff;\n}\n", "", {"version":3,"sources":["/Users/liuhongrui/heima/contacts/python/2019.12/py3-web/app/js/pages/start.vue"],"names":[],"mappings":";AAAA,iBAAiB;AACjB;EACE,mBAAmB;EACnB,cAAc;EACd,yBAAyB;EACzB,6BAA6B;EAC7B,0BAA0B;EAC1B,iBAAiB;CAAE;AACnB;IACE,gBAAgB;IAChB,YAAY;IACZ,WAAW;CAAE;AAEjB;EACE,WAAW;EACX,eAAe;EACf,cAAc;EACd,cAAc;EACd,oBAAoB;EACpB,sBAAsB;EACtB,iBAAiB;EACjB,gBAAgB;EAChB,YAAY;EACZ,UAAU;EACV,4BAA4B;CAAE;AAC9B;IACE,cAAc;IACd,eAAe;IACf,qBAAqB;IACrB,oBAAoB;CAAE;AACxB;IACE,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;CAAE;AACjB;MACE,kBAAkB;MAClB,eAAe;CAAE;AACnB;MACE,8BAA8B;CAAE;AAClC;MACE,WAAW;CAAE;AACf;MACE,mBAAmB;MACnB,cAAc;MACd,eAAe;MACf,gBAAgB;MAChB,sBAAsB;MACtB,YAAY;MACZ,cAAc;MACd,oBAAoB;MACpB,kBAAkB;CAAE;AAE1B;EACE,gBAAgB;EAChB,mBAAmB;EACnB,YAAY;EACZ,WAAW;EACX,UAAU;EACV,eAAe;EACf,oBAAoB;EACpB,UAAU;EACV,0BAA0B;CAAE;AAE9B;EACE,mBAAmB;EACnB,mBAAmB;EACnB,aAAa;EACb,kCAAkC;EAClC,UAAU;EACV,4BAA4B;CAAE;AAC9B;IACE,cAAc;IACd,eAAe;IACf,WAAW;IACX,8BAA8B;CAAE;AAChC;MACE,iBAAiB;MACjB,eAAe;MACf,8BAA8B;CAAE;AAChC;QACE,UAAU;CAAE;AACd;QACE,cAAc;QACd,mBAAmB;QACnB,uBAAuB;CAAE;AAC3B;QACE,sBAAsB;QACtB,uBAAuB;QACvB,iBAAiB;QACjB,mBAAmB;QACnB,oBAAoB;QACpB,aAAa;CAAE;AACf;UACE,eAAe;CAAE;AACnB;UACE,gBAAgB;CAAE;AAC1B;IACE,oBAAoB;IACpB,WAAW;IACX,cAAc;CAAE;AAChB;MACE,iBAAiB;MACjB,YAAY;MACZ,iBAAiB;CAAE;AACnB;QACE,mBAAmB;QACnB,mBAAmB;QACnB,sBAAsB;QACtB,YAAY;QACZ,4BAA4B;CAAE;AAC9B;UACE,mBAAmB;UACnB,gCAAgB;UAChB,aAAa;UACb,4BAA4B;UAC5B,oBAAoB;UACpB,oBAAoB;CAAE;AAC1B;QACE,mBAAmB;CAAE;AAC3B;IACE,eAAe;IACf,YAAY;CAAE","file":"start.vue","sourcesContent":["@charset \"UTF-8\";\n.start {\n  position: relative;\n  height: 100vh;\n  background-size: contain;\n  background-repeat: no-repeat;\n  background-color: #fec300;\n  overflow: scroll; }\n  .start .banner {\n    position: fixed;\n    width: 100%;\n    z-index: 9; }\n\n.kanjia-ban {\n  z-index: 9;\n  margin: 0 auto;\n  width: 8.6rem;\n  display: flex;\n  background: #c8dce6;\n  border-radius: 0.5rem;\n  overflow: hidden;\n  position: fixed;\n  top: 6.2rem;\n  left: 50%;\n  transform: translateX(-50%); }\n  .kanjia-ban .logo {\n    width: 2.5rem;\n    height: 1.9rem;\n    margin-left: 0.28rem;\n    margin-top: 0.46rem; }\n  .kanjia-ban .text {\n    margin: 0.25rem;\n    font-size: 0.4rem;\n    color: #000000; }\n    .kanjia-ban .text .title {\n      font-size: 0.5rem;\n      color: #298423; }\n    .kanjia-ban .text .old-price {\n      text-decoration: line-through; }\n    .kanjia-ban .text .new-price {\n      color: red; }\n    .kanjia-ban .text button {\n      position: absolute;\n      right: 0.3rem;\n      bottom: 0.5rem;\n      background: red;\n      border-radius: 0.4rem;\n      color: #fff;\n      width: 2.1rem;\n      line-height: 0.8rem;\n      font-size: 0.4rem; }\n\nh3 {\n  position: fixed;\n  text-align: center;\n  width: 100%;\n  z-index: 8;\n  top: 9rem;\n  display: block;\n  background: #fec300;\n  margin: 0;\n  padding: 0.45rem 0 0.3rem; }\n\n.rank {\n  text-align: center;\n  position: absolute;\n  top: 10.1rem;\n  height: calc(100% - pxToRem(910));\n  left: 50%;\n  transform: translateX(-50%); }\n  .rank .list {\n    width: 8.6rem;\n    margin: 0 auto;\n    padding: 0;\n    justify-content: space-around; }\n    .rank .list li {\n      list-style: none;\n      height: 1.6rem;\n      border-bottom: 1px dotted red; }\n      .rank .list li:last-child {\n        border: 0; }\n      .rank .list li img {\n        width: 1.2rem;\n        border-radius: 50%;\n        vertical-align: middle; }\n      .rank .list li span {\n        display: inline-block;\n        vertical-align: middle;\n        margin: 0 0.8rem;\n        font-size: 0.38rem;\n        line-height: 1.6rem;\n        height: 100%; }\n        .rank .list li span:nth-child(1) {\n          margin-left: 0; }\n        .rank .list li span:nth-child(3) {\n          margin-right: 0; }\n  .rank .note {\n    margin: -0.5rem 0 0;\n    padding: 0;\n    width: 7.2rem; }\n    .rank .note li {\n      list-style: none;\n      color: #fff;\n      text-align: left; }\n      .rank .note li:first-child {\n        position: relative;\n        text-align: center;\n        display: inline-block;\n        width: 100%;\n        border-top: 1px dotted #fff; }\n        .rank .note li:first-child::before {\n          position: absolute;\n          content: \"活动说明\";\n          top: -0.3rem;\n          transform: translateX(-50%);\n          background: #fec300;\n          padding: 0 0.3rem 0; }\n      .rank .note li:nth-child(2) {\n        margin-top: 0.3rem; }\n  .rank .zuzhi {\n    margin: 0.4rem;\n    color: #fff; }\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -2085,7 +2129,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "\n.page {\n  height: 100%;\n}\n", "", {"version":3,"sources":["/Users/liuhongrui/heima/contacts/python/2019.12/py3-web/app/js/js/app.vue"],"names":[],"mappings":";AAuCA;EACA,aAAA;CACA","file":"app.vue","sourcesContent":["<template>\n  <div class=\"page\">\n    <router-view></router-view>\n    <Start />\n  </div>\n</template>\n\n<script>\nimport axios from \"axios\";\nimport Start from \"./pages/start.vue\";\nexport default {\n  components: {\n    Start\n  },\n  data() {\n    return {};\n  },\n  mounted() {\n    console.log(this.getQueryString(\"code\"));\n    let url = \"/wechart_user?code=\" + this.getQueryString(\"code\");\n    axios.get(url).then(res => {\n      res = res.data;\n      window.localStorage.setItem(\"rechengparty_user\", JSON.stringify(res));\n    });\n  },\n  methods: {\n    getQueryString(name) {\n      let reg = new RegExp(\"(^|&)\" + name + \"=([^&]*)(&|$)\", \"i\");\n      let r = window.location.search.substr(1).match(reg);\n      if (r != null) {\n        return unescape(r[2]);\n      }\n      return null;\n    }\n  }\n};\n</script>\n\n<style>\n.page {\n  height: 100%;\n}\n</style>"],"sourceRoot":""}]);
+exports.push([module.i, "\n.page {\n  height: 100%;\n}\n", "", {"version":3,"sources":["/Users/liuhongrui/heima/contacts/python/2019.12/py3-web/app/js/js/app.vue"],"names":[],"mappings":";AA+EA;EACA,aAAA;CACA","file":"app.vue","sourcesContent":["<template>\n  <div class=\"page\">\n    <router-view></router-view>\n    <Start />\n  </div>\n</template>\n\n<script>\nimport axios from \"axios\";\nimport sha1 from \"js-sha1\";\nimport Start from \"./pages/start.vue\";\nexport default {\n  components: {\n    Start\n  },\n  data() {\n    return {\n      wxInfo: {}\n    };\n  },\n  mounted() {\n    this.saveUserInfo();\n  },\n  methods: {\n    getQueryString(name) {\n      let reg = new RegExp(\"(^|&)\" + name + \"=([^&]*)(&|$)\", \"i\");\n      let r = window.location.search.substr(1).match(reg);\n      if (r != null) {\n        return unescape(r[2]);\n      }\n      return null;\n    },\n    saveUserInfo() {\n      let url = \"/wx/wechart_user?code=\" + this.getQueryString(\"code\");\n      axios.get(url).then(res => {\n        res = res.data;\n        window.localStorage.setItem(\"rechengparty_wx_db\", JSON.stringify(res));\n        this.loadData();\n        this.setJS_SDK()\n      });\n    },\n    loadData() {\n      let wxDb = window.localStorage.getItem(\"rechengparty_wx_db\");\n      if (wxDb == \"\") {\n        alert(\"连接微信服务器失败，请退出当前页面，稍后再试\");\n        return;\n      }\n      this.wxInfo = JSON.parse(wxDb);\n      console.log(\"wxDb\", wxDb);\n      console.log(\"wxInfo\", this.wxInfo);\n    },\n    setJS_SDK() {\n      let jsapi_ticket = this.wxInfo.r_for_js_sdk.ticket;\n      let noncestr = +new Date() + \"\";\n      let timestamp = +new Date() + \"\";\n      let url = window.location.href.split(\"#\")[0];\n      let str = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;\n      console.log(\"str\", str);\n      let sha1Str = sha1(str);\n      console.log(\"sha1Str\", sha1Str);\n      wx.config({\n        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。\n        appId: \"wx65b975e308c72245\", // 必填，公众号的唯一标识\n        timestamp: timestamp, // 必填，生成签名的时间戳\n        nonceStr: noncestr, // 必填，生成签名的随机串\n        signature: sha1Str, // 必填，签名\n        jsApiList: [\"playVoice\"] // 必填，需要使用的JS接口列表\n      });\n\n      wx.ready(function(){\n　　　　var audio = document.getElementById(\"audioPlay\");\n　　　　audio.play()\n　　})\n    }\n  }\n};\n</script>\n\n<style>\n.page {\n  height: 100%;\n}\n</style>"],"sourceRoot":""}]);
 
 // exports
 
@@ -2173,6 +2217,375 @@ function toComment(sourceMap) {
 
 	return '/*# ' + data + ' */';
 }
+
+/***/ }),
+
+/***/ "./node_modules/js-sha1/src/sha1.js":
+/*!******************************************!*\
+  !*** ./node_modules/js-sha1/src/sha1.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*
+ * [js-sha1]{@link https://github.com/emn178/js-sha1}
+ *
+ * @version 0.6.0
+ * @author Chen, Yi-Cyuan [emn178@gmail.com]
+ * @copyright Chen, Yi-Cyuan 2014-2017
+ * @license MIT
+ */
+/*jslint bitwise: true */
+(function () {
+  'use strict';
+
+  var root = typeof window === 'object' ? window : {};
+  var NODE_JS = !root.JS_SHA1_NO_NODE_JS && typeof process === 'object' && process.versions && process.versions.node;
+  if (NODE_JS) {
+    root = global;
+  }
+  var COMMON_JS = !root.JS_SHA1_NO_COMMON_JS && typeof module === 'object' && module.exports;
+  var AMD =  true && __webpack_require__(/*! !webpack amd options */ "./node_modules/webpack/buildin/amd-options.js");
+  var HEX_CHARS = '0123456789abcdef'.split('');
+  var EXTRA = [-2147483648, 8388608, 32768, 128];
+  var SHIFT = [24, 16, 8, 0];
+  var OUTPUT_TYPES = ['hex', 'array', 'digest', 'arrayBuffer'];
+
+  var blocks = [];
+
+  var createOutputMethod = function (outputType) {
+    return function (message) {
+      return new Sha1(true).update(message)[outputType]();
+    };
+  };
+
+  var createMethod = function () {
+    var method = createOutputMethod('hex');
+    if (NODE_JS) {
+      method = nodeWrap(method);
+    }
+    method.create = function () {
+      return new Sha1();
+    };
+    method.update = function (message) {
+      return method.create().update(message);
+    };
+    for (var i = 0; i < OUTPUT_TYPES.length; ++i) {
+      var type = OUTPUT_TYPES[i];
+      method[type] = createOutputMethod(type);
+    }
+    return method;
+  };
+
+  var nodeWrap = function (method) {
+    var crypto = eval("require('crypto')");
+    var Buffer = eval("require('buffer').Buffer");
+    var nodeMethod = function (message) {
+      if (typeof message === 'string') {
+        return crypto.createHash('sha1').update(message, 'utf8').digest('hex');
+      } else if (message.constructor === ArrayBuffer) {
+        message = new Uint8Array(message);
+      } else if (message.length === undefined) {
+        return method(message);
+      }
+      return crypto.createHash('sha1').update(new Buffer(message)).digest('hex');
+    };
+    return nodeMethod;
+  };
+
+  function Sha1(sharedMemory) {
+    if (sharedMemory) {
+      blocks[0] = blocks[16] = blocks[1] = blocks[2] = blocks[3] = blocks[4] = blocks[5] = blocks[6] = blocks[7] = blocks[8] = blocks[9] = blocks[10] = blocks[11] = blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+      this.blocks = blocks;
+    } else {
+      this.blocks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
+
+    this.h0 = 0x67452301;
+    this.h1 = 0xEFCDAB89;
+    this.h2 = 0x98BADCFE;
+    this.h3 = 0x10325476;
+    this.h4 = 0xC3D2E1F0;
+
+    this.block = this.start = this.bytes = this.hBytes = 0;
+    this.finalized = this.hashed = false;
+    this.first = true;
+  }
+
+  Sha1.prototype.update = function (message) {
+    if (this.finalized) {
+      return;
+    }
+    var notString = typeof message !== 'string';
+    if (notString && message.constructor === root.ArrayBuffer) {
+      message = new Uint8Array(message);
+    }
+    var code,
+        index = 0,
+        i,
+        length = message.length || 0,
+        blocks = this.blocks;
+
+    while (index < length) {
+      if (this.hashed) {
+        this.hashed = false;
+        blocks[0] = this.block;
+        blocks[16] = blocks[1] = blocks[2] = blocks[3] = blocks[4] = blocks[5] = blocks[6] = blocks[7] = blocks[8] = blocks[9] = blocks[10] = blocks[11] = blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+      }
+
+      if (notString) {
+        for (i = this.start; index < length && i < 64; ++index) {
+          blocks[i >> 2] |= message[index] << SHIFT[i++ & 3];
+        }
+      } else {
+        for (i = this.start; index < length && i < 64; ++index) {
+          code = message.charCodeAt(index);
+          if (code < 0x80) {
+            blocks[i >> 2] |= code << SHIFT[i++ & 3];
+          } else if (code < 0x800) {
+            blocks[i >> 2] |= (0xc0 | code >> 6) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | code & 0x3f) << SHIFT[i++ & 3];
+          } else if (code < 0xd800 || code >= 0xe000) {
+            blocks[i >> 2] |= (0xe0 | code >> 12) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | code >> 6 & 0x3f) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | code & 0x3f) << SHIFT[i++ & 3];
+          } else {
+            code = 0x10000 + ((code & 0x3ff) << 10 | message.charCodeAt(++index) & 0x3ff);
+            blocks[i >> 2] |= (0xf0 | code >> 18) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | code >> 12 & 0x3f) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | code >> 6 & 0x3f) << SHIFT[i++ & 3];
+            blocks[i >> 2] |= (0x80 | code & 0x3f) << SHIFT[i++ & 3];
+          }
+        }
+      }
+
+      this.lastByteIndex = i;
+      this.bytes += i - this.start;
+      if (i >= 64) {
+        this.block = blocks[16];
+        this.start = i - 64;
+        this.hash();
+        this.hashed = true;
+      } else {
+        this.start = i;
+      }
+    }
+    if (this.bytes > 4294967295) {
+      this.hBytes += this.bytes / 4294967296 << 0;
+      this.bytes = this.bytes % 4294967296;
+    }
+    return this;
+  };
+
+  Sha1.prototype.finalize = function () {
+    if (this.finalized) {
+      return;
+    }
+    this.finalized = true;
+    var blocks = this.blocks,
+        i = this.lastByteIndex;
+    blocks[16] = this.block;
+    blocks[i >> 2] |= EXTRA[i & 3];
+    this.block = blocks[16];
+    if (i >= 56) {
+      if (!this.hashed) {
+        this.hash();
+      }
+      blocks[0] = this.block;
+      blocks[16] = blocks[1] = blocks[2] = blocks[3] = blocks[4] = blocks[5] = blocks[6] = blocks[7] = blocks[8] = blocks[9] = blocks[10] = blocks[11] = blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+    }
+    blocks[14] = this.hBytes << 3 | this.bytes >>> 29;
+    blocks[15] = this.bytes << 3;
+    this.hash();
+  };
+
+  Sha1.prototype.hash = function () {
+    var a = this.h0,
+        b = this.h1,
+        c = this.h2,
+        d = this.h3,
+        e = this.h4;
+    var f,
+        j,
+        t,
+        blocks = this.blocks;
+
+    for (j = 16; j < 80; ++j) {
+      t = blocks[j - 3] ^ blocks[j - 8] ^ blocks[j - 14] ^ blocks[j - 16];
+      blocks[j] = t << 1 | t >>> 31;
+    }
+
+    for (j = 0; j < 20; j += 5) {
+      f = b & c | ~b & d;
+      t = a << 5 | a >>> 27;
+      e = t + f + e + 1518500249 + blocks[j] << 0;
+      b = b << 30 | b >>> 2;
+
+      f = a & b | ~a & c;
+      t = e << 5 | e >>> 27;
+      d = t + f + d + 1518500249 + blocks[j + 1] << 0;
+      a = a << 30 | a >>> 2;
+
+      f = e & a | ~e & b;
+      t = d << 5 | d >>> 27;
+      c = t + f + c + 1518500249 + blocks[j + 2] << 0;
+      e = e << 30 | e >>> 2;
+
+      f = d & e | ~d & a;
+      t = c << 5 | c >>> 27;
+      b = t + f + b + 1518500249 + blocks[j + 3] << 0;
+      d = d << 30 | d >>> 2;
+
+      f = c & d | ~c & e;
+      t = b << 5 | b >>> 27;
+      a = t + f + a + 1518500249 + blocks[j + 4] << 0;
+      c = c << 30 | c >>> 2;
+    }
+
+    for (; j < 40; j += 5) {
+      f = b ^ c ^ d;
+      t = a << 5 | a >>> 27;
+      e = t + f + e + 1859775393 + blocks[j] << 0;
+      b = b << 30 | b >>> 2;
+
+      f = a ^ b ^ c;
+      t = e << 5 | e >>> 27;
+      d = t + f + d + 1859775393 + blocks[j + 1] << 0;
+      a = a << 30 | a >>> 2;
+
+      f = e ^ a ^ b;
+      t = d << 5 | d >>> 27;
+      c = t + f + c + 1859775393 + blocks[j + 2] << 0;
+      e = e << 30 | e >>> 2;
+
+      f = d ^ e ^ a;
+      t = c << 5 | c >>> 27;
+      b = t + f + b + 1859775393 + blocks[j + 3] << 0;
+      d = d << 30 | d >>> 2;
+
+      f = c ^ d ^ e;
+      t = b << 5 | b >>> 27;
+      a = t + f + a + 1859775393 + blocks[j + 4] << 0;
+      c = c << 30 | c >>> 2;
+    }
+
+    for (; j < 60; j += 5) {
+      f = b & c | b & d | c & d;
+      t = a << 5 | a >>> 27;
+      e = t + f + e - 1894007588 + blocks[j] << 0;
+      b = b << 30 | b >>> 2;
+
+      f = a & b | a & c | b & c;
+      t = e << 5 | e >>> 27;
+      d = t + f + d - 1894007588 + blocks[j + 1] << 0;
+      a = a << 30 | a >>> 2;
+
+      f = e & a | e & b | a & b;
+      t = d << 5 | d >>> 27;
+      c = t + f + c - 1894007588 + blocks[j + 2] << 0;
+      e = e << 30 | e >>> 2;
+
+      f = d & e | d & a | e & a;
+      t = c << 5 | c >>> 27;
+      b = t + f + b - 1894007588 + blocks[j + 3] << 0;
+      d = d << 30 | d >>> 2;
+
+      f = c & d | c & e | d & e;
+      t = b << 5 | b >>> 27;
+      a = t + f + a - 1894007588 + blocks[j + 4] << 0;
+      c = c << 30 | c >>> 2;
+    }
+
+    for (; j < 80; j += 5) {
+      f = b ^ c ^ d;
+      t = a << 5 | a >>> 27;
+      e = t + f + e - 899497514 + blocks[j] << 0;
+      b = b << 30 | b >>> 2;
+
+      f = a ^ b ^ c;
+      t = e << 5 | e >>> 27;
+      d = t + f + d - 899497514 + blocks[j + 1] << 0;
+      a = a << 30 | a >>> 2;
+
+      f = e ^ a ^ b;
+      t = d << 5 | d >>> 27;
+      c = t + f + c - 899497514 + blocks[j + 2] << 0;
+      e = e << 30 | e >>> 2;
+
+      f = d ^ e ^ a;
+      t = c << 5 | c >>> 27;
+      b = t + f + b - 899497514 + blocks[j + 3] << 0;
+      d = d << 30 | d >>> 2;
+
+      f = c ^ d ^ e;
+      t = b << 5 | b >>> 27;
+      a = t + f + a - 899497514 + blocks[j + 4] << 0;
+      c = c << 30 | c >>> 2;
+    }
+
+    this.h0 = this.h0 + a << 0;
+    this.h1 = this.h1 + b << 0;
+    this.h2 = this.h2 + c << 0;
+    this.h3 = this.h3 + d << 0;
+    this.h4 = this.h4 + e << 0;
+  };
+
+  Sha1.prototype.hex = function () {
+    this.finalize();
+
+    var h0 = this.h0,
+        h1 = this.h1,
+        h2 = this.h2,
+        h3 = this.h3,
+        h4 = this.h4;
+
+    return HEX_CHARS[h0 >> 28 & 0x0F] + HEX_CHARS[h0 >> 24 & 0x0F] + HEX_CHARS[h0 >> 20 & 0x0F] + HEX_CHARS[h0 >> 16 & 0x0F] + HEX_CHARS[h0 >> 12 & 0x0F] + HEX_CHARS[h0 >> 8 & 0x0F] + HEX_CHARS[h0 >> 4 & 0x0F] + HEX_CHARS[h0 & 0x0F] + HEX_CHARS[h1 >> 28 & 0x0F] + HEX_CHARS[h1 >> 24 & 0x0F] + HEX_CHARS[h1 >> 20 & 0x0F] + HEX_CHARS[h1 >> 16 & 0x0F] + HEX_CHARS[h1 >> 12 & 0x0F] + HEX_CHARS[h1 >> 8 & 0x0F] + HEX_CHARS[h1 >> 4 & 0x0F] + HEX_CHARS[h1 & 0x0F] + HEX_CHARS[h2 >> 28 & 0x0F] + HEX_CHARS[h2 >> 24 & 0x0F] + HEX_CHARS[h2 >> 20 & 0x0F] + HEX_CHARS[h2 >> 16 & 0x0F] + HEX_CHARS[h2 >> 12 & 0x0F] + HEX_CHARS[h2 >> 8 & 0x0F] + HEX_CHARS[h2 >> 4 & 0x0F] + HEX_CHARS[h2 & 0x0F] + HEX_CHARS[h3 >> 28 & 0x0F] + HEX_CHARS[h3 >> 24 & 0x0F] + HEX_CHARS[h3 >> 20 & 0x0F] + HEX_CHARS[h3 >> 16 & 0x0F] + HEX_CHARS[h3 >> 12 & 0x0F] + HEX_CHARS[h3 >> 8 & 0x0F] + HEX_CHARS[h3 >> 4 & 0x0F] + HEX_CHARS[h3 & 0x0F] + HEX_CHARS[h4 >> 28 & 0x0F] + HEX_CHARS[h4 >> 24 & 0x0F] + HEX_CHARS[h4 >> 20 & 0x0F] + HEX_CHARS[h4 >> 16 & 0x0F] + HEX_CHARS[h4 >> 12 & 0x0F] + HEX_CHARS[h4 >> 8 & 0x0F] + HEX_CHARS[h4 >> 4 & 0x0F] + HEX_CHARS[h4 & 0x0F];
+  };
+
+  Sha1.prototype.toString = Sha1.prototype.hex;
+
+  Sha1.prototype.digest = function () {
+    this.finalize();
+
+    var h0 = this.h0,
+        h1 = this.h1,
+        h2 = this.h2,
+        h3 = this.h3,
+        h4 = this.h4;
+
+    return [h0 >> 24 & 0xFF, h0 >> 16 & 0xFF, h0 >> 8 & 0xFF, h0 & 0xFF, h1 >> 24 & 0xFF, h1 >> 16 & 0xFF, h1 >> 8 & 0xFF, h1 & 0xFF, h2 >> 24 & 0xFF, h2 >> 16 & 0xFF, h2 >> 8 & 0xFF, h2 & 0xFF, h3 >> 24 & 0xFF, h3 >> 16 & 0xFF, h3 >> 8 & 0xFF, h3 & 0xFF, h4 >> 24 & 0xFF, h4 >> 16 & 0xFF, h4 >> 8 & 0xFF, h4 & 0xFF];
+  };
+
+  Sha1.prototype.array = Sha1.prototype.digest;
+
+  Sha1.prototype.arrayBuffer = function () {
+    this.finalize();
+
+    var buffer = new ArrayBuffer(20);
+    var dataView = new DataView(buffer);
+    dataView.setUint32(0, this.h0);
+    dataView.setUint32(4, this.h1);
+    dataView.setUint32(8, this.h2);
+    dataView.setUint32(12, this.h3);
+    dataView.setUint32(16, this.h4);
+    return buffer;
+  };
+
+  var exports = createMethod();
+
+  if (COMMON_JS) {
+    module.exports = exports;
+  } else {
+    root.sha1 = exports;
+    if (AMD) {
+      !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+        return exports;
+      }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    }
+  }
+})();
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js"), __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -2916,6 +3329,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "start" }, [
+    _c("audio", {
+      attrs: {
+        id: "audioPlay",
+        src: "/app_static/img/mu.mp3",
+        autoplay: "autoplay"
+      }
+    }),
+    _vm._v(" "),
     _c("img", {
       staticClass: "banner",
       attrs: { src: __webpack_require__(/*! ../../img/start-img.jpeg */ "./img/start-img.jpeg"), alt: "" }
@@ -2942,6 +3363,8 @@ var render = function() {
       false ? undefined : _vm._e(),
       _vm._v(" "),
       _vm._m(2),
+      _vm._v(" "),
+      _c("br"),
       _vm._v(" "),
       _c("div", { staticClass: "zuzhi" }, [
         _vm._v("\n      ©成都热橙工作室 2014~2020\n    ")
@@ -2992,7 +3415,7 @@ var staticRenderFns = [
     return _c("ul", { staticClass: "note" }, [
       _c("li"),
       _vm._v(" "),
-      _c("li", [_vm._v("1.点击开始砍价,获取海报图片")]),
+      _c("li", [_vm._v("1.点击分享砍价,获取海报图片")]),
       _vm._v(" "),
       _c("li", [_vm._v("2.将海报分享至朋友圈")]),
       _vm._v(" "),
@@ -13656,6 +14079,20 @@ if (inBrowser) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Vue);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../timers-browserify/main.js */ "./node_modules/timers-browserify/main.js").setImmediate))
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/amd-options.js":
+/*!****************************************!*\
+  !*** (webpack)/buildin/amd-options.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
+module.exports = __webpack_amd_options__;
+
+/* WEBPACK VAR INJECTION */}.call(this, {}))
 
 /***/ }),
 

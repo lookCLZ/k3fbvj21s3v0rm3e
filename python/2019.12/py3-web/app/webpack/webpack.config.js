@@ -43,7 +43,7 @@ module.exports = [
           ]
         },
         {
-          test: /\.(gif|png|woff|woff2|eot|ttf|svg|jpg|jpeg)$/,
+          test: /\.(gif|png|woff|woff2|eot|ttf|svg|jpg|jpeg|mp3)$/,
           loader: 'url-loader',
           options: {
             limit: 8192,
@@ -72,7 +72,7 @@ module.exports = [
           })
         },
         {
-          test: /\.(gif|png|woff|woff2|eot|ttf|svg|jpg|jpeg)$/,
+          test: /\.(gif|png|woff|woff2|eot|ttf|svg|jpg|jpeg|mp3)$/,
           loader: 'url-loader',
           options: {
             limit: 10000,

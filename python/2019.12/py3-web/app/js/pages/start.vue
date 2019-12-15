@@ -1,5 +1,6 @@
 <template>
   <div class="start">
+    <audio id="audioPlay" src="/app_static/img/mu.mp3" autoplay="autoplay"></audio>
     <img
       class="banner"
       src="../../img/start-img.jpeg"
@@ -44,11 +45,12 @@
       </ul>
       <ul class="note">
         <li></li>
-        <li>1.点击开始砍价,获取海报图片</li>
+        <li>1.点击分享砍价,获取海报图片</li>
         <li>2.将海报分享至朋友圈</li>
         <li>3.好友使用微信扫描海报上的二维码，参与砍价</li>
         <li>4.根据好友参与数量，您将获取50元到200元不等的优惠额度</li>
       </ul>
+      <br>
       <div class="zuzhi">
         ©成都热橙工作室 2014~2020
       </div>
@@ -184,7 +186,7 @@ h3 {
     }
   }
   .note {
-    margin: pxToRem(-80) 0 0;
+    margin: pxToRem(-50) 0 0;
     padding: 0;
     width: pxToRem(720);
     li {
