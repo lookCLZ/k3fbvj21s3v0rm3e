@@ -156,7 +156,6 @@ def wechart_user(*, code):
         appid+"&secret="+secret
     r_for_access_token = requests.get(url_for_access_token)
     r_for_access_token = json.loads(r_for_access_token.content)
-    return r_for_access_token
     # 获取js_sdk
     url_for_js_sdk = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + \
         r_for_access_token["access_token"]+"&type=jsapi"
