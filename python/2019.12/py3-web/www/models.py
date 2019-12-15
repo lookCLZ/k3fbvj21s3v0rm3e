@@ -7,12 +7,15 @@ Models for user, blog, comment.
 
 __author__ = 'Michael Liao'
 
-import time, uuid
+import time
+import uuid
 
 from orm import Model, StringField, BooleanField, FloatField, TextField
 
+
 def next_id():
     return '%015d%s000' % (int(time.time() * 1000), uuid.uuid4().hex)
+
 
 class User(Model):
     __table__ = 'users'
@@ -24,6 +27,7 @@ class User(Model):
     name = StringField(ddl='varchar(50)')
     image = StringField(ddl='varchar(500)')
     created_at = FloatField(default=time.time)
+
 
 class Blog(Model):
     __table__ = 'blogs'
@@ -37,46 +41,38 @@ class Blog(Model):
     content = TextField()
     created_at = FloatField(default=time.time)
 
-class WxUser(Model):
-    __table__ = 'users'
+
+class WxOrder(Model):
+    __table__ = 'orders'
 
     id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
-    wx_user_id =  StringField(ddl='varchar(200)')
-    wx_name = StringField(ddl='varchar(50)')
+    wx_user_id = StringField(ddl='varchar(200)')
+    wx_user_name = StringField(ddl='varchar(50)')
+    wx_user_image = StringField(ddl='varchar(500)')
     wx_addr = StringField(ddl='varchar(50)')
     wx_sex = BooleanField()
-    wx_avatar = StringField(ddl='varchar(50)')
-    is_invitor = BooleanField()
-    create_at = StringField(ddl='varchar(500)')
+    create_at = FloatField(default=time.time)
     delete_at = FloatField(default=time.time)
+    content = TextField()
+    old_price = StringField(ddl='varchar(50)')
     sub_amount = StringField(ddl='varchar(50)')
-    peo_amount = StringField(ddl='varchar(50)')
-    store_id = StringField(ddl='varchar(50)')
-    price = StringField(ddl='varchar(50)')
-    
-class WxOrder(Model):
-    __table__ = 'blogs'
+    people_amount = StringField(ddl='varchar(50)')
+
+
+class WxJoiner(Model):
+    __table__ = 'joiner'
 
     id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
-    wx_invitor_id=StringField(ddl='varchar(200)')
-    user_name = StringField(ddl='varchar(50)')
-    user_image = StringField(ddl='varchar(500)')
-    name = StringField(ddl='varchar(50)')
-    summary = StringField(ddl='varchar(200)')
+    order_id = StringField(ddl='varchar(200)')
+    wx_user_id = StringField(ddl='varchar(200)')
+    wx_user_name = StringField(ddl='varchar(50)')
+    wx_user_image = StringField(ddl='varchar(500)')
+    wx_addr = StringField(ddl='varchar(50)')
+    wx_sex = BooleanField()
     content = TextField()
+    help_amount = StringField(ddl='varchar(50)')
     created_at = FloatField(default=time.time)
-
-class WxJoin(Model):
-    __table__ = 'blogs'
-
-    id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
-    wx_invitor_id=StringField(ddl='varchar(200)')
-    order_id = StringField(ddl='varchar(50)')
-    user_image = StringField(ddl='varchar(500)')
-    name = StringField(ddl='varchar(50)')
-    summary = StringField(ddl='varchar(200)')
-    content = TextField()
-    created_at = FloatField(default=time.time)
+    delete_at = FloatField(default=time.time)
 
 
 class Comment(Model):
