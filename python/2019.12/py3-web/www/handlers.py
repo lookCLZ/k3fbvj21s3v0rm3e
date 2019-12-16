@@ -21,7 +21,7 @@ from aiohttp import web
 from coroweb import get, post
 from apis import Page, APIValueError, APIResourceNotFoundError
 
-from models import User, Comment, Blog, next_id
+from models import User, Comment, Blog, UniquePwd, next_id
 from config import configs
 
 COOKIE_NAME = 'awesession'
@@ -125,6 +125,12 @@ def register():
         '__template__': 'register.html'
     }
 
+# 后台管理
+@get('/wx/admin')
+def admin():
+    return {
+        '__template__': 'admin.html'
+    }
 
 # 邀请者初始页面
 @get('/wx/kanjiahuodong')
@@ -293,6 +299,10 @@ def api_delete_comments(id, request):
     yield from c.remove()
     return dict(id=id)
 
+@get('/wx/unique_pwds')
+def list():
+    c = yield from UniquePwd.findAll(orderBy='id asc',limit=(0, 100))
+    return dict(list=c)
 
 @get('/api/users')
 def api_get_users(*, page='1'):

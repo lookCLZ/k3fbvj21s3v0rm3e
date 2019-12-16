@@ -10,7 +10,7 @@ __author__ = 'Michael Liao'
 import time
 import uuid
 
-from orm import Model, StringField, BooleanField, FloatField, TextField
+from orm import Model, StringField, BooleanField, FloatField, TextField, TimeStampField
 
 
 def next_id():
@@ -42,6 +42,16 @@ class Blog(Model):
     created_at = FloatField(default=time.time)
 
 
+class UniquePwd(Model):
+    __table__ = "unique_pwds"
+
+    id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
+    wx_order_id = StringField(ddl='varchar(50)')
+    code = StringField(ddl='varchar(50)')
+    is_used = BooleanField()
+    created = StringField(ddl='varchar(50)')
+
+
 class WxOrder(Model):
     __table__ = 'orders'
 
@@ -57,6 +67,7 @@ class WxOrder(Model):
     old_price = StringField(ddl='varchar(50)')
     sub_amount = StringField(ddl='varchar(50)')
     people_amount = StringField(ddl='varchar(50)')
+    store_name = StringField(ddl='varchar(50)')
 
 
 class WxJoiner(Model):

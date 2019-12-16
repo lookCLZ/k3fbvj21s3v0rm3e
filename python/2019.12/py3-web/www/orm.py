@@ -88,6 +88,11 @@ class BooleanField(Field):
     def __init__(self, name=None, default=False):
         super().__init__(name, 'boolean', False, default)
 
+class TimeStampField(Field):
+    
+    def __init__(self, name=None, default=None):
+        super().__init__(name, 'datetime.datetime', False, default)
+
 class IntegerField(Field):
 
     def __init__(self, name=None, primary_key=False, default=0):

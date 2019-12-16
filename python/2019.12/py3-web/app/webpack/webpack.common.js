@@ -2,7 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 
 let jsEntries = [
-  "main"
+  "main",
+  "admin"
 ]
 const arrToObj = arr => {
   const obj = {}
