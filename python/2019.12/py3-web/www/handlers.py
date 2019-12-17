@@ -299,10 +299,12 @@ def api_delete_comments(id, request):
     yield from c.remove()
     return dict(id=id)
 
+
 @get('/wx/unique_pwds')
 def list():
-    c = yield from UniquePwd.findAll(orderBy='id asc',limit=(0, 100))
+    c = yield from UniquePwd.findAll(orderBy='id asc', limit=(0, 100))
     return dict(list=c)
+
 
 @get('/api/users')
 def api_get_users(*, page='1'):

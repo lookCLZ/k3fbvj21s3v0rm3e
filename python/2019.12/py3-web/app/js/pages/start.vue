@@ -1,6 +1,16 @@
 <template>
   <div class="start">
-    <audio id="audioPlay" src="https://rechengparty-dist.oss-cn-chengdu.aliyuncs.com/cache/1.mp3" autoplay="autoplay"></audio>
+    <img
+      @click="ctrlMusic"
+      class="music"
+      src="../../img/music.jpg"
+      alt=""
+    >
+    <audio
+      id="audioPlay"
+      src="https://rechengparty-dist.oss-cn-chengdu.aliyuncs.com/cache/1.mp3"
+      autoplay="autoplay"
+    ></audio>
     <img
       class="banner"
       src="../../img/start-img.jpeg"
@@ -19,7 +29,15 @@
           <div>已砍价：<span class="sub-price">500元</span></div>
           <div>现价：<span class="new-price">1200元</span></div>
         </div>
-        <button @click="shareKanJia">分享砍价</button>
+
+        <router-link to="/post">
+          <img
+            class="btn"
+            src="../../img/kan-button.jpg"
+            alt=""
+          >
+        </router-link>
+
       </div>
     </div>
     <h3 v-if="false">助力排行榜</h3>
@@ -60,9 +78,20 @@
 
 <script>
 export default {
-  methods:{
-    shareKanJia(){
-
+  data() {
+    return {
+      state: true
+    };
+  },
+  methods: {
+    ctrlMusic() {
+      let audio = document.getElementById("audioPlay");
+      if (this.state) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      this.state = !this.state;
     }
   }
 };
@@ -80,7 +109,14 @@ export default {
   background-repeat: no-repeat;
   background-color: #fec300;
   overflow: scroll;
-
+  .music {
+    position: fixed;
+    z-index: 10;
+    top: pxToRem(30);
+    right: pxToRem(30);
+    width: pxToRem(200);
+    cursor: pointer;
+  }
   .banner {
     position: fixed;
     width: 100%;
@@ -92,7 +128,7 @@ export default {
   margin: 0 auto;
   width: pxToRem(860);
   display: flex;
-  background: #c8dce6;
+  background: #fff;
   border-radius: pxToRem(50);
   overflow: hidden;
   position: fixed;
@@ -111,7 +147,7 @@ export default {
     color: #000000;
     .title {
       font-size: pxToRem(50);
-      color: #298423;
+      color: #fec300;
     }
     .old-price {
       text-decoration: line-through;
@@ -121,16 +157,12 @@ export default {
     .new-price {
       color: red;
     }
-    button {
+    .btn {
       position: absolute;
       right: pxToRem(30);
       bottom: pxToRem(50);
-      background: red;
-      border-radius: pxToRem(40);
-      color: #fff;
       width: pxToRem(210);
-      line-height: pxToRem(80);
-      font-size: pxToRem(40);
+      cursor: pointer;
     }
   }
 }

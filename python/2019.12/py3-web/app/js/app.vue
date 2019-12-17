@@ -1,18 +1,13 @@
 <template>
   <div class="page">
-    <router-view></router-view>
-    <Start />
+    <router-view />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import sha1 from "js-sha1";
-import Start from "./pages/start.vue";
 export default {
-  components: {
-    Start
-  },
   data() {
     return {
       wxInfo: {}
@@ -72,7 +67,7 @@ export default {
       });
 
       wx.ready(function() {
-        var audio = document.getElementById("audioPlay");
+        let audio = document.getElementById("audioPlay");
         audio.play();
       });
     }
