@@ -11,10 +11,11 @@ import "lib-flexible/flexible";
 
 const routes = [
   { path: "/post", name: "post", component: PostComponent },
-  { path: "/w", name: "start", component: Start }
+  { path: "/", name: "start", component: Start }
 ];
 const router = new VueRouter({
-  routes // (缩写) 相当于 routes: routes
+  mode: "history",
+  routes 
 });
 Vue.use(VueRouter);
 new Vue({

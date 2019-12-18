@@ -133,10 +133,15 @@ def admin():
     }
 
 # 邀请者初始页面
-@get('/wx/kanjiahuodong')
-def register():
+@get('/wx/kanjiahuodong/{pwd_code}/{ux}')
+def register(pwd_code,ux):
+    pwds = yield from UniquePwd.findAll('code=?', [pwd_code])
+    if len(pwds) == 0:
+        raise APIValueError('code', 'code 不存在')
+    pwds = pwds[0]
     return {
-        '__template__': 'kanjiahuodong.html'
+        '__template__': 'kanjiahuodong.html',
+        "pwd_code":pwd_code
     }
 
 # 获取微信用户信息
@@ -169,7 +174,9 @@ def wechart_user(*, code):
     r_for_js_sdk = json.loads(r_for_js_sdk.content)
 
     rsp = {"r_for_js_sdk": r_for_js_sdk, "r_for_user": r_for_user}
-
+    unique_pwds = Unique_pwds(is_used=1)
+    yield from unique_pwds.save()
+    wxOrder=WxOrder(wx_user_id=r_for_user["opend_id"])
     return rsp
 
 

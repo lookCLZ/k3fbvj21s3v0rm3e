@@ -41,7 +41,14 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {};
+  },
+  mounted() {
+    window.GetImg('.post');
+  }
+};
 </script>
 <style lang="scss" scoped>
 @function pxToRem($num) {
@@ -77,7 +84,7 @@ export default {};
 }
 .bottom {
   position: absolute;
-  bottom: pxToRem(-10);
+  bottom: pxToRem(-18);
   text-align: center;
   .arrow {
     width: pxToRem(100);

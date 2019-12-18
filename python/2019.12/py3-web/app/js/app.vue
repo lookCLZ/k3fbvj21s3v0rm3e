@@ -30,7 +30,12 @@ export default {
       return null;
     },
     saveUserInfo() {
-      let url = "/wx/wechart_user?code=" + this.getQueryString("code");
+      let pwdCode = document.querySelector("#data").dataset.pwdCode;
+      let url =
+        "/wx/wechart_user?code=" +
+        this.getQueryString("code") +
+        "&pwd_code=" +
+        pwdCode;
       axios.get(url).then(res => {
         res = res.data;
         window.localStorage.setItem("rechengparty_wx_db", JSON.stringify(res));
