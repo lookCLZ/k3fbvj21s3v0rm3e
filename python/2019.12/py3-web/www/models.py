@@ -10,7 +10,7 @@ __author__ = 'Michael Liao'
 import time
 import uuid
 
-from orm import Model, StringField, BooleanField, FloatField, TextField, TimeStampField
+from orm import Model, StringField, IntegerField, BooleanField, FloatField, TextField, TimeStampField
 
 
 def next_id():
@@ -55,14 +55,13 @@ class UniquePwd(Model):
 class WxOrder(Model):
     __table__ = 'orders'
 
-    id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
+    id = IntegerField(primary_key=True)
     wx_user_id = StringField(ddl='varchar(200)')
     wx_user_name = StringField(ddl='varchar(50)')
     wx_user_image = StringField(ddl='varchar(500)')
     wx_addr = StringField(ddl='varchar(50)')
     wx_sex = BooleanField()
-    create_at = FloatField(default=time.time)
-    delete_at = FloatField(default=time.time)
+    create_at = StringField(ddl='varchar(50)')
     content = TextField()
     old_price = StringField(ddl='varchar(50)')
     sub_amount = StringField(ddl='varchar(50)')

@@ -21,7 +21,7 @@ from aiohttp import web
 from coroweb import get, post
 from apis import Page, APIValueError, APIResourceNotFoundError
 
-from models import User, Comment, Blog, UniquePwd, next_id
+from models import User, Comment, Blog, UniquePwd,WxOrder, next_id
 from config import configs
 
 COOKIE_NAME = 'awesession'
@@ -133,52 +133,87 @@ def admin():
     }
 
 # 邀请者初始页面
-@get('/wx/kanjiahuodong/{pwd_code}/{ux}')
-def register(pwd_code,ux):
+@get('/wx/kanjiahuodong/{pwd_code}')
+def register(pwd_code):
     pwds = yield from UniquePwd.findAll('code=?', [pwd_code])
     if len(pwds) == 0:
         raise APIValueError('code', 'code 不存在')
     pwds = pwds[0]
-    return {
-        '__template__': 'kanjiahuodong.html',
-        "pwd_code":pwd_code
-    }
+    if pwds.wx_order_id:
+        orders = yield from WxOrder.findAll('id=?', [pwds.wx_order_id])
+        if len(orders) == 0:
+            raise APIValueError('code', '订单不存在')
+        order = orders[0]
+        if order.people_amount != "":
+            joiners = yield from WxJoiner.findAll("order_id=?", order.id)
+            if len(joiners) == 0:
+                raise APIValueError('code', '查询助力者失败')
+
+        return {
+            '__template__': 'kanjiahuodong.html',
+            "pwd_code": pwd_code,
+            "old_price": order.old_price,
+            "sub_amount": order.sub_amount,
+            "people_amount": order.people_amount,
+            "store_name": order.store_name,
+        }
+
+    else:
+        return {
+            '__template__': 'kanjiahuodong.html',
+            "pwd_code": pwd_code
+        }
 
 # 获取微信用户信息
 @get('/wx/wechart_user')
-def wechart_user(*, code):
-    appid = "wx65b975e308c72245"
-    secret = "bf01504ce43d019e757b3183bdef9cad"
-    # 获取access_token
-    url_for_token = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + \
-        "&secret="+secret+"&code=" + code+"&grant_type=authorization_code"
-    r = requests.get(url_for_token)
-    rsp = json.loads(r.content)
-    access_token = rsp["access_token"]
-    # 获取userinfo
-    url_for_user = "https://api.weixin.qq.com/sns/userinfo?access_token="+access_token +  \
-        "&openid="+rsp["openid"]+"&lang=zh_CN"
+def wechart_user(*,pwd_code, code):
+    global UniquePwd
+    pwds = yield from UniquePwd.findAll('code=?', [pwd_code])
+    if len(pwds) == 0:
+        raise APIValueError('code', 'code 不存在')
+    pwds = pwds[0]
+    if pwds.wx_order_id != "":
+        appid = "wx65b975e308c72245"
+        secret = "bf01504ce43d019e757b3183bdef9cad"
+        # 获取access_token
+        url_for_token = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + \
+            "&secret="+secret+"&code=" + code+"&grant_type=authorization_code"
+        r = requests.get(url_for_token)
+        rsp = json.loads(r.content)
+        access_token = rsp["access_token"]
+        # 获取userinfo
+        url_for_user = "https://api.weixin.qq.com/sns/userinfo?access_token="+access_token +  \
+            "&openid="+rsp["openid"]+"&lang=zh_CN"
 
-    r_for_user = requests.get(url_for_user)
-    r_for_user = json.loads(r_for_user.content)
-    r_for_user["access_token"] = access_token
-    # 获取access_token，用于js-sdk （此access_token跟上面的access_token不一样）
-    url_for_access_token = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + \
-        appid+"&secret="+secret
-    r_for_access_token = requests.get(url_for_access_token)
-    r_for_access_token = json.loads(r_for_access_token.content)
-    # 获取js_sdk
-    url_for_js_sdk = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + \
-        r_for_access_token["access_token"]+"&type=jsapi"
-    r_for_js_sdk = requests.get(url_for_js_sdk)
-    r_for_js_sdk = json.loads(r_for_js_sdk.content)
+        r_for_user = requests.get(url_for_user)
+        r_for_user = json.loads(r_for_user.content)
+        # r_for_user["access_token"] = access_token
+        # 获取access_token，用于js-sdk （此access_token跟上面的access_token不一样）
+        # url_for_access_token = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + \
+        #     appid+"&secret="+secret
+        # r_for_access_token = requests.get(url_for_access_token)
+        # r_for_access_token = json.loads(r_for_access_token.content)
+        # 获取js_sdk
+        # url_for_js_sdk = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + \
+        #     r_for_access_token["access_token"]+"&type=jsapi"
+        # r_for_js_sdk = requests.get(url_for_js_sdk)
+        # r_for_js_sdk = json.loads(r_for_js_sdk.content)
 
-    rsp = {"r_for_js_sdk": r_for_js_sdk, "r_for_user": r_for_user}
-    unique_pwds = Unique_pwds(is_used=1)
-    yield from unique_pwds.save()
-    wxOrder=WxOrder(wx_user_id=r_for_user["opend_id"])
-    return rsp
+        # rsp = {}
 
+        wxOrder = WxOrder(
+            wx_user_id=r_for_user["openid"],
+            wx_user_name=r_for_user["nickname"],
+            wx_user_image=r_for_user["headimgurl"],
+            wx_addr=r_for_user["country"]+"-"+r_for_user["city"],
+            wx_sex=r_for_user["sex"],
+            create_at=time.time(),
+        )
+        yield from wxOrder.save()
+        pwds.is_used = 1
+        pwds.wx_order_id = wxOrder.id
+        yield from pwds.update()
+        return r_for_user
 
 @get('/signin')
 def signin():

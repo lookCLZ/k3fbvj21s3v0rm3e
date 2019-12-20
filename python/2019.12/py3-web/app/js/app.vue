@@ -14,11 +14,11 @@ export default {
     };
   },
   mounted() {
-    if (!window.localStorage.getItem("rechengparty_wx_db")) {
+    // if (!window.localStorage.getItem("rechengparty_wx_db")) {
       this.saveUserInfo();
-    } else {
-      this.loadData();
-    }
+    // } else {
+      // this.loadData();
+    // }
   },
   methods: {
     getQueryString(name) {
@@ -40,7 +40,7 @@ export default {
         res = res.data;
         window.localStorage.setItem("rechengparty_wx_db", JSON.stringify(res));
         this.loadData();
-        this.setJS_SDK();
+        // this.setJS_SDK();
       });
     },
     loadData() {

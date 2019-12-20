@@ -14,7 +14,7 @@ const routes = [
   { path: "/", name: "start", component: Start }
 ];
 const router = new VueRouter({
-  mode: "history",
+  // mode: "history",
   routes 
 });
 Vue.use(VueRouter);
