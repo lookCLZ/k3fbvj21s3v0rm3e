@@ -21,7 +21,7 @@ from aiohttp import web
 from coroweb import get, post
 from apis import Page, APIValueError, APIResourceNotFoundError
 
-from models import User, Comment, Blog, UniquePwd,WxOrder, next_id
+from models import User, Comment, Blog, UniquePwd,WxOrder,WxJoiner, next_id
 from config import configs
 
 COOKIE_NAME = 'awesession'
@@ -163,6 +163,67 @@ def register(pwd_code):
             '__template__': 'kanjiahuodong.html',
             "pwd_code": pwd_code
         }
+
+@get('/scanning/qr_code/{pwd_code}')
+def scanning(*,pwd_code, code):
+    global WxJoiner
+    global UniquePwd
+    
+    pwds = yield from UniquePwd.findAll('code=?', [pwd_code])
+    if len(pwds) == 0:
+        raise APIValueError('code', 'code 不存在')
+    pwds = pwds[0]
+    if pwds.wx_order_id !="":
+        appid = "wx65b975e308c72245"
+        secret = "bf01504ce43d019e757b3183bdef9cad"
+        # 获取access_token
+        url_for_token = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + \
+            "&secret="+secret+"&code=" + code+"&grant_type=authorization_code"
+        r = requests.get(url_for_token)
+        rsp = json.loads(r.content)
+        access_token = rsp["access_token"]
+        # 获取userinfo
+        url_for_user = "https://api.weixin.qq.com/sns/userinfo?access_token="+access_token +  \
+            "&openid="+rsp["openid"]+"&lang=zh_CN"
+
+        r_for_user = requests.get(url_for_user)
+        r_for_user = json.loads(r_for_user.content)
+
+        joiners = yield from WxJoiner.findAll('order_id=?', [pwds.wx_order_id])
+
+        if len(joiners) > 0:
+            for v in joiners:
+                if v.user_id == r_for_user["openid"]:
+                    raise APIValueError('code', '你已经参与过此砍价活动，请勿重复参加')
+
+        amount = 20
+        sum = 0
+        if len(joiners) == 0:
+            amount = 50
+        elif len(joiners) == 1:
+            amount = 30
+        else:
+            for v in joiners:
+                sum+=v.help_amount
+        if sum >= 200:
+            raise APIValueError('code', '此轮砍价已经结束')
+
+        wxJoiner = WxJoiner(
+            order_id=pwds.wx_order_id,
+            user_id=r_for_user["openid"],
+            wx_user_name=r_for_user["nickname"],
+            wx_user_image=r_for_user["headimgurl"],
+            wx_addr=r_for_user["country"]+"-"+r_for_user["city"],
+            wx_sex=r_for_user["sex"],
+            create_at=time.time(),
+            help_amount= if 
+        )
+        yield from wxJoiner.save()
+
+    return {
+        'help_amount':wxJoiner.help_amount,
+        '__template__': 'kanjiahuodong.html',
+    }
 
 # 获取微信用户信息
 @get('/wx/wechart_user')
@@ -346,7 +407,6 @@ def api_delete_comments(id, request):
 def list():
     c = yield from UniquePwd.findAll(orderBy='id asc', limit=(0, 100))
     return dict(list=c)
-
 
 @get('/api/users')
 def api_get_users(*, page='1'):
