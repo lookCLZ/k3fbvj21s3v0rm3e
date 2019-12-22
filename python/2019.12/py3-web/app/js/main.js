@@ -3,6 +3,7 @@ import Vue from "vue";
 import App from "./app.vue";
 import Start from "./pages/start.vue";
 import PostComponent from "./pages/post.vue";
+import Result from "./pages/result.vue"
 import VueRouter from "vue-router";
 
 import "lib-flexible/flexible";
@@ -11,6 +12,7 @@ import "lib-flexible/flexible";
 
 const routes = [
   { path: "/post", name: "post", component: PostComponent },
+  { path: "/result", name: "result", component: Result },
   { path: "/", name: "start", component: Start }
 ];
 const router = new VueRouter({

@@ -164,7 +164,7 @@ def register(pwd_code):
             "pwd_code": pwd_code
         }
 
-@get('/scanning/qr_code/{pwd_code}')
+@get('/wx/scanning/{pwd_code}')
 def scanning(*,pwd_code, code):
     global WxJoiner
     global UniquePwd
@@ -216,7 +216,7 @@ def scanning(*,pwd_code, code):
             wx_addr=r_for_user["country"]+"-"+r_for_user["city"],
             wx_sex=r_for_user["sex"],
             create_at=time.time(),
-            help_amount= if 
+            help_amount = amount
         )
         yield from wxJoiner.save()
 
