@@ -2422,39 +2422,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data() {
     return {
-      state: true
+      state: true,
+      name: "",
+      store_name: "",
+      sub_amount: "",
+      old_price: "",
+      joiners: []
     };
   },
   mounted() {
-    console.log(window.href);
     if (window.location.href.includes("scanning")) {
-      this.$router.push({ path: 'result' });
+      this.$router.push({ path: "result" });
+      return;
     }
+    this.info();
   },
   methods: {
     ctrlMusic() {
@@ -2465,6 +2450,15 @@ __webpack_require__.r(__webpack_exports__);
         audio.play();
       }
       this.state = !this.state;
+    },
+    info() {
+      this.store_name = document.querySelector("#data").dataset.store_name;
+      this.sub_amount = document.querySelector("#data").dataset.sub_amount;
+      this.old_price = document.querySelector("#data").dataset.old_price;
+      let temp = document.querySelector("#data").dataset.joiners.replace(/\'/g, '"');
+      temp = temp.replace(/None/g, "null");
+      console.log(temp);
+      this.joiners = JSON.parse(temp);
     }
   }
 });
@@ -4815,9 +4809,32 @@ var render = function() {
         "div",
         { staticClass: "text" },
         [
-          _c("span", { staticClass: "title" }, [_vm._v("场地布置场地布置")]),
+          _c("span", { staticClass: "title" }, [
+            _vm._v(_vm._s(_vm.store_name))
+          ]),
           _vm._v(" "),
-          _vm._m(0),
+          _c("div", [
+            _c("div", [
+              _vm._v("\n          原价："),
+              _c("span", { staticClass: "old-price" }, [
+                _vm._v(_vm._s(_vm.old_price) + "元")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _vm._v("\n          已砍价："),
+              _c("span", { staticClass: "sub-price" }, [
+                _vm._v(_vm._s(_vm.sub_amount) + "元")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _vm._v("\n          现价："),
+              _c("span", { staticClass: "new-price" }, [
+                _vm._v(_vm._s(_vm.old_price - _vm.sub_amount) + "元")
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c("router-link", { attrs: { to: "/post" } }, [
             _c("img", {
@@ -4830,19 +4847,52 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    false ? undefined : _vm._e(),
+    _vm.joiners.length > 0 ? _c("h3", [_vm._v("助力排行榜")]) : _vm._e(),
     _vm._v(" "),
-    _c("div", { staticClass: "rank" }, [
-      false ? undefined : _vm._e(),
-      _vm._v(" "),
-      _vm._m(2),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("div", { staticClass: "zuzhi" }, [
-        _vm._v("\n      ©热橙派对 2014~2020\n    ")
-      ])
-    ])
+    _c(
+      "div",
+      { staticClass: "rank" },
+      [
+        _vm._l(_vm.joiners, function(item) {
+          return _c("ul", { key: item, staticClass: "list" }, [
+            _c("li", [
+              _vm._m(0, true),
+              _vm._v(" "),
+              _c("span", [
+                _vm._v(
+                  "\n          " + _vm._s(item.wx_user_name) + "\n        "
+                )
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v(" 已砍" + _vm._s(item.help_amount) + "元 ")])
+            ])
+          ])
+        }),
+        _vm._v(" "),
+        _vm.joiners.length == 0
+          ? _c("ul", { staticClass: "note" }, [
+              _c("li"),
+              _vm._v(" "),
+              _c("li", [_vm._v("1.点击分享砍价,获取海报图片")]),
+              _vm._v(" "),
+              _c("li", [_vm._v("2.将海报分享至朋友圈")]),
+              _vm._v(" "),
+              _c("li", [_vm._v("3.好友使用微信扫描海报上的二维码，参与砍价")]),
+              _vm._v(" "),
+              _c("li", [
+                _vm._v("4.根据好友参与数量，您将获取50元到200元不等的优惠额度")
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "zuzhi" }, [
+          _vm._v("\n      ©热橙派对 2014~2020\n    ")
+        ])
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = [
@@ -4850,53 +4900,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", [
-        _vm._v("原价："),
-        _c("span", { staticClass: "old-price" }, [_vm._v("1700元")])
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _vm._v("已砍价："),
-        _c("span", { staticClass: "sub-price" }, [_vm._v("500元")])
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _vm._v("现价："),
-        _c("span", { staticClass: "new-price" }, [_vm._v("1200元")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("span", [
-        _c("img", { attrs: { src: __webpack_require__(/*! ../../img/avatar.jpg */ "./img/avatar.jpg"), alt: "" } })
-      ]),
-      _vm._v(" "),
-      _c("span", [_vm._v("\n          浪倾城\n        ")]),
-      _vm._v(" "),
-      _c("span", [_vm._v("\n          已砍50元\n        ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "note" }, [
-      _c("li"),
-      _vm._v(" "),
-      _c("li", [_vm._v("1.点击分享砍价,获取海报图片")]),
-      _vm._v(" "),
-      _c("li", [_vm._v("2.将海报分享至朋友圈")]),
-      _vm._v(" "),
-      _c("li", [_vm._v("3.好友使用微信扫描海报上的二维码，参与砍价")]),
-      _vm._v(" "),
-      _c("li", [
-        _vm._v("4.根据好友参与数量，您将获取50元到200元不等的优惠额度")
-      ])
+    return _c("span", [
+      _c("img", { attrs: { src: __webpack_require__(/*! ../../img/avatar.jpg */ "./img/avatar.jpg"), alt: "" } })
     ])
   }
 ]

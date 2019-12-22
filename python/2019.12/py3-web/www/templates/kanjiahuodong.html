@@ -17,7 +17,7 @@
     <script src="https://gitee.com/lookclz/html-img/raw/master/html-img.js"></script>
     <script>
       if (!location.href.includes("code")) {
-        const  host  = window.location.pathname;
+        const host = window.location.pathname;
         const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65b975e308c72245&redirect_uri=http://www.rechengparty.com${host}&response_type=code&scope=snsapi_userinfo#wechat_redirect`;
         location.href = url;
       }
@@ -28,8 +28,17 @@
       document.documentElement.style.fontSize = deviceWidth / 7.5 + "px";
     </script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
-    <div id="data" data-pwd-code="{{ pwd_code }}" data-help-amount="{{ help_amount }}">
-      </div>
+    <div
+      id="data"
+      data-step="{{ step }}"
+      data-pwd-code="{{ pwd_code }}"
+      data-sub_amount="{{ sub_amount }}"
+      data-old_price="{{ old_price }}"
+      data-help-amount="{{ help_amount }}"
+      data-people_amount="{{ people_amount }}"
+      data-store_name="{{ store_name }}"
+      data-joiners="{{joiners}}"
+    ></div>
     <div id="app"></div>
     <script src="/app_static/js/main.js"></script>
   </body>

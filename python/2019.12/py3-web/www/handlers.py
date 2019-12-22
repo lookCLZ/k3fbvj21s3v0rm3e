@@ -146,11 +146,20 @@ def register(pwd_code):
         order = orders[0]
         if order.people_amount != "":
             joiners = yield from WxJoiner.findAll("order_id=?", order.id)
-            if len(joiners) == 0:
-                raise APIValueError('code', '查询助力者失败')
+            return {
+                '__template__': 'kanjiahuodong.html',
+                'step': 6,
+                "pwd_code": pwd_code,
+                "old_price": order.old_price,
+                "sub_amount": order.sub_amount,
+                "people_amount": order.people_amount,
+                "store_name": order.store_name,
+                "joiners": joiners,
+            }
 
         return {
             '__template__': 'kanjiahuodong.html',
+            'step':7,
             "pwd_code": pwd_code,
             "old_price": order.old_price,
             "sub_amount": order.sub_amount,
@@ -228,6 +237,12 @@ def scanning(*, pwd_code, code=""):
         )
         yield from wxJoiner.save()
 
+        wxOrder = yield from WxOrder.findAll('id=?', [pwds.wx_order_id])
+        wxOrder = wxOrder[0]
+        wxOrder.sub_amount = int(wxOrder.sub_amount)+amount
+        wxOrder.people_amount = int(wxOrder.people_amount)+1
+        yield from wxOrder.update()
+
     return {
         'help_amount': wxJoiner.help_amount,
         '__template__': 'kanjiahuodong.html',
@@ -241,7 +256,7 @@ def wechart_user(*, pwd_code, code):
     if len(pwds) == 0:
         raise APIValueError('code', 'code 不存在')
     pwds = pwds[0]
-    if pwds.wx_order_id != "":
+    if pwds.wx_order_id == None:
         appid = "wx65b975e308c72245"
         secret = "bf01504ce43d019e757b3183bdef9cad"
         # 获取access_token
@@ -271,17 +286,23 @@ def wechart_user(*, pwd_code, code):
         # rsp = {}
         # wxOrders = yield from WxOrder.findAll('wx_user_id=?', [r_for_user["openid"]])
         # if len(pwds) == 0:
-        wxOrder = WxOrder(
-            wx_user_id=r_for_user["openid"],
-            wx_user_name=r_for_user["nickname"],
-            wx_user_image=r_for_user["headimgurl"],
-            wx_addr=r_for_user["country"]+"-"+r_for_user["city"],
-            wx_sex=r_for_user["sex"],
-            create_at=time.time(),
-        )
-        yield from wxOrder.save()
+
+        wxOrder = yield from WxOrder.findAll('id=?', [pwds.order_id])
+        wxOrder=wxOrder[0]
+      
+        wxOrder.wx_user_id=r_for_user["openid"]
+        wxOrder.wx_user_name=r_for_user["nickname"]
+        wxOrder.wx_user_image=r_for_user["headimgurl"]
+        wxOrder.wx_addr=r_for_user["country"]+"-"+r_for_user["city"]
+        wxOrder.wx_sex=r_for_user["sex"]
+        wxOrder.sub_amount="0"
+        wxOrder.people_amount="0"
+        wxOrder.create_at=time.time()
+        
+        yield from wxOrder.update()
+        wxOrder = yield from WxOrder.findAll("create_at=?", [wxOrder.create_at])
         pwds.is_used = 1
-        pwds.wx_order_id = wxOrder.id
+        pwds.wx_order_id = wxOrder[0].id
         yield from pwds.update()
         return r_for_user
 
@@ -404,16 +425,28 @@ def list():
 
 
 @get('/wx/admin_info')
-def list2(*,id):
+def list2(*, id):
     c = yield from WxOrder.findAll("id = ?", id)
     d = yield from WxJoiner.findAll("order_id = ?", id)
-    return dict(list1=c,list2=d)
+    return dict(list1=c, list2=d)
+
 
 @post("/wx/postadmin")
-def postadmin(request, *,content):
+async def postadmin(request):
+    json_str = await request.content.read(4996)
+    json_dict = json.loads(json_str)
+
+    if json_dict["key"] != "rechengparty_chengdu_2020":
+        raise APIValueError('key')
+
+    wxOrder = await WxOrder.findAll('id=?', [json_dict["orderId"]])
+    wxOrder = wxOrder[0]
+    wxOrder.store_name = json_dict["storeName"]
+    wxOrder.old_price = json_dict["price"]
+    await wxOrder.update()
     return {
-        "request":request,
-        "content":content
+        "ok": 2,
+        "request": json_dict
     }
 
 
