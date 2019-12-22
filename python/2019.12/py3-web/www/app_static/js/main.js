@@ -203,7 +203,7 @@ module.exports = "/app_static/img/null.c3ba0f33.jpg";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/app_static/img/post-title.5137ce2f.jpg";
+module.exports = "/app_static/img/post-title.cd3c6403.jpg";
 
 /***/ }),
 
@@ -2338,6 +2338,18 @@ __webpack_require__.r(__webpack_exports__);
       img50: false,
       imgnull: false
     };
+  },
+  mounted() {
+    let helpAmount = document.querySelector("#data").dataset.helpAmount + "";
+    if (helpAmount == "20") {
+      this.img20 = true;
+    } else if (helpAmount == "30") {
+      this.img30 = true;
+    } else if (helpAmount == "50") {
+      this.img50 = true;
+    } else if (helpAmount == "null") {
+      this.imgnull = true;
+    }
   }
 });
 
@@ -2431,11 +2443,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data() {
     return {
       state: true
     };
+  },
+  mounted() {
+    console.log(window.href);
+    if (window.location.href.includes("scanning")) {
+      this.$router.push({ path: 'result' });
+    }
   },
   methods: {
     ctrlMusic() {

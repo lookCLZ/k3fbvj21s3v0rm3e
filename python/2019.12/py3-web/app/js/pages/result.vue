@@ -17,6 +17,18 @@ export default {
       img50: false,
       imgnull: false
     };
+  },
+  mounted() {
+    let helpAmount = document.querySelector("#data").dataset.helpAmount + "";
+    if (helpAmount == "20") {
+      this.img20 = true;
+    } else if (helpAmount == "30") {
+      this.img30 = true;
+    } else if (helpAmount == "50") {
+      this.img50 = true;
+    } else if (helpAmount == "null") {
+      this.imgnull = true;
+    }
   }
 };
 </script>

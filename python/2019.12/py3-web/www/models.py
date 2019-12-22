@@ -72,17 +72,16 @@ class WxOrder(Model):
 class WxJoiner(Model):
     __table__ = 'joiner'
 
-    id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
+    id = IntegerField(primary_key=True)
     order_id = StringField(ddl='varchar(200)')
-    wx_user_id = StringField(ddl='varchar(200)')
+    user_id = StringField(ddl='varchar(200)')
     wx_user_name = StringField(ddl='varchar(50)')
     wx_user_image = StringField(ddl='varchar(500)')
     wx_addr = StringField(ddl='varchar(50)')
     wx_sex = BooleanField()
     content = TextField()
     help_amount = StringField(ddl='varchar(50)')
-    created_at = FloatField(default=time.time)
-    delete_at = FloatField(default=time.time)
+    create_at = StringField(ddl='varchar(50)')
 
 
 class Comment(Model):

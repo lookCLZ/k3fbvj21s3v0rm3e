@@ -77,11 +77,18 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       state: true
     };
+  },
+  mounted(){
+    console.log(window.href)
+    if (window.location.href.includes("scanning")){
+      this.$router.push({ path: 'result'})
+    }
   },
   methods: {
     ctrlMusic() {

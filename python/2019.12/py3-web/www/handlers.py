@@ -21,7 +21,7 @@ from aiohttp import web
 from coroweb import get, post
 from apis import Page, APIValueError, APIResourceNotFoundError
 
-from models import User, Comment, Blog, UniquePwd,WxOrder,WxJoiner, next_id
+from models import User, Comment, Blog, UniquePwd, WxOrder, WxJoiner, next_id
 from config import configs
 
 COOKIE_NAME = 'awesession'
@@ -164,16 +164,21 @@ def register(pwd_code):
             "pwd_code": pwd_code
         }
 
+
 @get('/wx/scanning/{pwd_code}')
-def scanning(*,pwd_code, code):
+def scanning(*, pwd_code, code=""):
     global WxJoiner
     global UniquePwd
-    
+    if code == "":
+        return {
+            "pwd_code": pwd_code,
+            '__template__': 'kanjiahuodong.html',
+        }
     pwds = yield from UniquePwd.findAll('code=?', [pwd_code])
     if len(pwds) == 0:
         raise APIValueError('code', 'code 不存在')
     pwds = pwds[0]
-    if pwds.wx_order_id !="":
+    if pwds.wx_order_id != "":
         appid = "wx65b975e308c72245"
         secret = "bf01504ce43d019e757b3183bdef9cad"
         # 获取access_token
@@ -194,7 +199,10 @@ def scanning(*,pwd_code, code):
         if len(joiners) > 0:
             for v in joiners:
                 if v.user_id == r_for_user["openid"]:
-                    raise APIValueError('code', '你已经参与过此砍价活动，请勿重复参加')
+                    return {
+                        'help_amount': "null",
+                        '__template__': 'kanjiahuodong.html',
+                    }
 
         amount = 20
         sum = 0
@@ -204,7 +212,7 @@ def scanning(*,pwd_code, code):
             amount = 30
         else:
             for v in joiners:
-                sum+=v.help_amount
+                sum += v.help_amount
         if sum >= 200:
             raise APIValueError('code', '此轮砍价已经结束')
 
@@ -216,18 +224,18 @@ def scanning(*,pwd_code, code):
             wx_addr=r_for_user["country"]+"-"+r_for_user["city"],
             wx_sex=r_for_user["sex"],
             create_at=time.time(),
-            help_amount = amount
+            help_amount=amount
         )
         yield from wxJoiner.save()
 
     return {
-        'help_amount':wxJoiner.help_amount,
+        'help_amount': wxJoiner.help_amount,
         '__template__': 'kanjiahuodong.html',
     }
 
 # 获取微信用户信息
 @get('/wx/wechart_user')
-def wechart_user(*,pwd_code, code):
+def wechart_user(*, pwd_code, code):
     global UniquePwd
     pwds = yield from UniquePwd.findAll('code=?', [pwd_code])
     if len(pwds) == 0:
@@ -261,7 +269,8 @@ def wechart_user(*,pwd_code, code):
         # r_for_js_sdk = json.loads(r_for_js_sdk.content)
 
         # rsp = {}
-
+        # wxOrders = yield from WxOrder.findAll('wx_user_id=?', [r_for_user["openid"]])
+        # if len(pwds) == 0:
         wxOrder = WxOrder(
             wx_user_id=r_for_user["openid"],
             wx_user_name=r_for_user["nickname"],
@@ -275,6 +284,7 @@ def wechart_user(*,pwd_code, code):
         pwds.wx_order_id = wxOrder.id
         yield from pwds.update()
         return r_for_user
+
 
 @get('/signin')
 def signin():
@@ -322,22 +332,6 @@ def signout(request):
 @get('/manage/')
 def manage():
     return 'redirect:/manage/comments'
-
-
-@get('/manage/comments')
-def manage_comments(*, page='1'):
-    return {
-        '__template__': 'manage_comments.html',
-        'page_index': get_page_index(page)
-    }
-
-
-@get('/manage/blogs')
-def manage_blogs(*, page='1'):
-    return {
-        '__template__': 'manage_blogs.html',
-        'page_index': get_page_index(page)
-    }
 
 
 @get('/manage/blogs/create')
@@ -407,6 +401,21 @@ def api_delete_comments(id, request):
 def list():
     c = yield from UniquePwd.findAll(orderBy='id asc', limit=(0, 100))
     return dict(list=c)
+
+
+@get('/wx/admin_info')
+def list2(*,id):
+    c = yield from WxOrder.findAll("id = ?", id)
+    d = yield from WxJoiner.findAll("order_id = ?", id)
+    return dict(list1=c,list2=d)
+
+@post("/wx/postadmin")
+def postadmin(request, *,content):
+    return {
+        "request":request,
+        "content":content
+    }
+
 
 @get('/api/users')
 def api_get_users(*, page='1'):
