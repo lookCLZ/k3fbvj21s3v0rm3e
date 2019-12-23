@@ -130,17 +130,6 @@ module.exports = "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAUcAAAFUCAYAAAH
 
 /***/ }),
 
-/***/ "./img/avatar.jpg":
-/*!************************!*\
-  !*** ./img/avatar.jpg ***!
-  \************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/app_static/img/avatar.a967683b.jpg";
-
-/***/ }),
-
 /***/ "./img/code-wrap.jpg":
 /*!***************************!*\
   !*** ./img/code-wrap.jpg ***!
@@ -2183,6 +2172,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted() {
+    if (window.location.href.includes("scanning") && !window.location.href.includes("code")) {
+      this.$router.push({ path: "result" });
+      return;
+    }
     // if (!window.localStorage.getItem("rechengparty_wx_db")) {
     this.saveUserInfo();
     // } else {
@@ -2283,9 +2276,9 @@ __webpack_require__.r(__webpack_exports__);
   mounted() {
     this.qrcode();
     this.setCSS();
-    setTimeout(() => {
-      window.GetImg(".post");
-    }, 800);
+    // setTimeout(() => {
+    //   window.GetImg(".post");
+    // }, 5000);
   },
   methods: {
     qrcode() {
@@ -2534,7 +2527,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "\n.page {\n  height: 100%;\n}\n", "", {"version":3,"sources":["/Users/liuhongrui/heima/contacts/python/2019.12/py3-web/app/js/js/app.vue"],"names":[],"mappings":";AAmFA;EACA,aAAA;CACA","file":"app.vue","sourcesContent":["<template>\n  <div class=\"page\">\n    <router-view />\n  </div>\n</template>\n\n<script>\nimport axios from \"axios\";\nimport sha1 from \"js-sha1\";\nexport default {\n  data() {\n    return {\n      wxInfo: {}\n    };\n  },\n  mounted() {\n    // if (!window.localStorage.getItem(\"rechengparty_wx_db\")) {\n      this.saveUserInfo();\n    // } else {\n      // this.loadData();\n    // }\n  },\n  methods: {\n    getQueryString(name) {\n      let reg = new RegExp(\"(^|&)\" + name + \"=([^&]*)(&|$)\", \"i\");\n      let r = window.location.search.substr(1).match(reg);\n      if (r != null) {\n        return unescape(r[2]);\n      }\n      return null;\n    },\n    saveUserInfo() {\n      let pwdCode = document.querySelector(\"#data\").dataset.pwdCode;\n      let url =\n        \"/wx/wechart_user?code=\" +\n        this.getQueryString(\"code\") +\n        \"&pwd_code=\" +\n        pwdCode;\n      axios.get(url).then(res => {\n        res = res.data;\n        window.localStorage.setItem(\"rechengparty_wx_db\", JSON.stringify(res));\n        this.loadData();\n        // this.setJS_SDK();\n      });\n    },\n    loadData() {\n      let wxDb = window.localStorage.getItem(\"rechengparty_wx_db\");\n      if (wxDb == \"\") {\n        alert(\"连接微信服务器失败，请退出当前页面，稍后再试\");\n        return;\n      }\n      this.wxInfo = JSON.parse(wxDb);\n      console.log(\"wxDb\", wxDb);\n      console.log(\"wxInfo\", this.wxInfo);\n    },\n    setJS_SDK() {\n      let jsapi_ticket = this.wxInfo.r_for_js_sdk.ticket;\n      let noncestr = +new Date() + \"\";\n      let timestamp = +new Date() + \"\";\n      let url = window.location.href.split(\"#\")[0];\n      let str = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;\n      console.log(\"str\", str);\n      let sha1Str = sha1(str);\n      console.log(\"sha1Str\", sha1Str);\n      wx.config({\n        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。\n        appId: \"wx65b975e308c72245\", // 必填，公众号的唯一标识\n        timestamp: timestamp, // 必填，生成签名的时间戳\n        nonceStr: noncestr, // 必填，生成签名的随机串\n        signature: sha1Str, // 必填，签名\n        jsApiList: [\"playVoice\"] // 必填，需要使用的JS接口列表\n      });\n\n      wx.ready(function() {\n        let audio = document.getElementById(\"audioPlay\");\n        audio.play();\n      });\n    }\n  }\n};\n</script>\n\n<style>\n.page {\n  height: 100%;\n}\n</style>"],"sourceRoot":""}]);
+exports.push([module.i, "\n.page {\n  height: 100%;\n}\n", "", {"version":3,"sources":["/Users/liuhongrui/heima/contacts/python/2019.12/py3-web/app/js/js/app.vue"],"names":[],"mappings":";AA0FA;EACA,aAAA;CACA","file":"app.vue","sourcesContent":["<template>\n  <div class=\"page\">\n    <router-view />\n  </div>\n</template>\n\n<script>\nimport axios from \"axios\";\nimport sha1 from \"js-sha1\";\nexport default {\n  data() {\n    return {\n      wxInfo: {}\n    };\n  },\n  mounted() {\n    if (\n      window.location.href.includes(\"scanning\") &&\n      !window.location.href.includes(\"code\")\n    ) {\n      this.$router.push({ path: \"result\" });\n      return;\n    }\n    // if (!window.localStorage.getItem(\"rechengparty_wx_db\")) {\n    this.saveUserInfo();\n    // } else {\n    // this.loadData();\n    // }\n  },\n  methods: {\n    getQueryString(name) {\n      let reg = new RegExp(\"(^|&)\" + name + \"=([^&]*)(&|$)\", \"i\");\n      let r = window.location.search.substr(1).match(reg);\n      if (r != null) {\n        return unescape(r[2]);\n      }\n      return null;\n    },\n    saveUserInfo() {\n      let pwdCode = document.querySelector(\"#data\").dataset.pwdCode;\n      let url =\n        \"/wx/wechart_user?code=\" +\n        this.getQueryString(\"code\") +\n        \"&pwd_code=\" +\n        pwdCode;\n      axios.get(url).then(res => {\n        res = res.data;\n        window.localStorage.setItem(\"rechengparty_wx_db\", JSON.stringify(res));\n        this.loadData();\n        // this.setJS_SDK();\n      });\n    },\n    loadData() {\n      let wxDb = window.localStorage.getItem(\"rechengparty_wx_db\");\n      if (wxDb == \"\") {\n        alert(\"连接微信服务器失败，请退出当前页面，稍后再试\");\n        return;\n      }\n      this.wxInfo = JSON.parse(wxDb);\n      console.log(\"wxDb\", wxDb);\n      console.log(\"wxInfo\", this.wxInfo);\n    },\n    setJS_SDK() {\n      let jsapi_ticket = this.wxInfo.r_for_js_sdk.ticket;\n      let noncestr = +new Date() + \"\";\n      let timestamp = +new Date() + \"\";\n      let url = window.location.href.split(\"#\")[0];\n      let str = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;\n      console.log(\"str\", str);\n      let sha1Str = sha1(str);\n      console.log(\"sha1Str\", sha1Str);\n      wx.config({\n        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。\n        appId: \"wx65b975e308c72245\", // 必填，公众号的唯一标识\n        timestamp: timestamp, // 必填，生成签名的时间戳\n        nonceStr: noncestr, // 必填，生成签名的随机串\n        signature: sha1Str, // 必填，签名\n        jsApiList: [\"playVoice\"] // 必填，需要使用的JS接口列表\n      });\n\n      wx.ready(function() {\n        let audio = document.getElementById(\"audioPlay\");\n        audio.play();\n      });\n    }\n  }\n};\n</script>\n\n<style>\n.page {\n  height: 100%;\n}\n</style>\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -4856,7 +4849,9 @@ var render = function() {
         _vm._l(_vm.joiners, function(item) {
           return _c("ul", { key: item, staticClass: "list" }, [
             _c("li", [
-              _vm._m(0, true),
+              _c("span", [
+                _c("img", { attrs: { src: item.wx_user_image, alt: "" } })
+              ]),
               _vm._v(" "),
               _c("span", [
                 _vm._v(
@@ -4895,16 +4890,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [
-      _c("img", { attrs: { src: __webpack_require__(/*! ../../img/avatar.jpg */ "./img/avatar.jpg"), alt: "" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 if (false) {}

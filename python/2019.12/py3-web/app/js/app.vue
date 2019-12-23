@@ -14,10 +14,17 @@ export default {
     };
   },
   mounted() {
+    if (
+      window.location.href.includes("scanning") &&
+      !window.location.href.includes("code")
+    ) {
+      this.$router.push({ path: "result" });
+      return;
+    }
     // if (!window.localStorage.getItem("rechengparty_wx_db")) {
-      this.saveUserInfo();
+    this.saveUserInfo();
     // } else {
-      // this.loadData();
+    // this.loadData();
     // }
   },
   methods: {

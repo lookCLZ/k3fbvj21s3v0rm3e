@@ -33,7 +33,7 @@
       <ul class="list" v-for="item in joiners" :key="item">
         <li>
           <span>
-            <img src="../../img/avatar.jpg" alt="" />
+            <img :src="item.wx_user_image" alt="" />
           </span>
           <span>
             {{ item.wx_user_name }}

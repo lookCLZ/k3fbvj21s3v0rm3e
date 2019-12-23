@@ -46,7 +46,7 @@
             <a slot="title">{{ item.wx_addr }}</a>
           </a-list-item-meta>
           <a-list-item-meta>
-            <a slot="title">{{ (item.wx_sex = 1 ? "男" : "女") }}</a>
+            <a slot="title">{{ (item.wx_sex === 1 ? "男" : "女") }}</a>
           </a-list-item-meta>
           <a-list-item-meta>
             <a slot="title">砍价{{ item.help_amount }}元</a>

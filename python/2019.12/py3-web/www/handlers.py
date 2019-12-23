@@ -193,7 +193,7 @@ def scanning(*, pwd_code, code=""):
         # 获取access_token
         url_for_token = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + \
             "&secret="+secret+"&code=" + code+"&grant_type=authorization_code"
-        r = requests.get(url_for_token)
+        r = yield from requests.get(url_for_token)
         rsp = json.loads(r.content)
         access_token = rsp["access_token"]
         # 获取userinfo

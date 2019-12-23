@@ -24,9 +24,9 @@ export default {
   mounted() {
     this.qrcode();
     this.setCSS();
-    setTimeout(() => {
-      window.GetImg(".post");
-    }, 800);
+    // setTimeout(() => {
+    //   window.GetImg(".post");
+    // }, 5000);
   },
   methods: {
     qrcode() {
