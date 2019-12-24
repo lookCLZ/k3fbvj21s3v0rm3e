@@ -193,7 +193,7 @@ def scanning(*, pwd_code, code=""):
         # 获取access_token
         url_for_token = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + \
             "&secret="+secret+"&code=" + code+"&grant_type=authorization_code"
-        r = yield from requests.get(url_for_token)
+        r = requests.get(url_for_token)
         rsp = json.loads(r.content)
         access_token = rsp["access_token"]
         # 获取userinfo
@@ -221,7 +221,7 @@ def scanning(*, pwd_code, code=""):
             amount = 30
         else:
             for v in joiners:
-                sum += v.help_amount
+                sum += int(v.help_amount)
         if sum >= 200:
             raise APIValueError('code', '此轮砍价已经结束')
 
