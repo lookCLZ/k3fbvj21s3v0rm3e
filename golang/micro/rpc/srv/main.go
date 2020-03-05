@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/micro/go-micro/v2/util/log"
-	"github.com/micro/go-micro/v2"
+	"github.com/micro/go-micro/util/log"
+	"github.com/micro/go-micro"
 	"micro/rpc/srv/handler"
 	"micro/rpc/srv/subscriber"
 
