@@ -4,18 +4,12 @@ import (
 	"bytes"
 	"fmt"
 	"log"
-	"net"
 
 	"github.com/jlaffaye/ftp"
 )
 
 func ConnectAndLogin() *ftp.ServerConn {
-	con_n, err := net.Dial("tcp", "123.57.36.41:222")
-	if err != nil {
-		log.Println(err)
-		return nil
-	}
-	conn, err := ftp.Dial("123.57.36.41"+":"+"222", ftp.DialWithNetConn(con_n))
+	conn, err := ftp.Dial("123.57.36.41" + ":" + "222")
 	if err != nil {
 		log.Println(err)
 		return nil
@@ -31,7 +25,7 @@ func main() {
 	c := ConnectAndLogin()
 
 	data := bytes.NewBufferString("Hello World")
-	if err := c.Stor("/test-file.txt", data); err != nil {
+	if err := c.Stor("/FTP_LiuHR/test2.txt", data); err != nil {
 		fmt.Printf("%+v\n", err)
 	}
 
