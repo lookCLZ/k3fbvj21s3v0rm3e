@@ -13,6 +13,7 @@ require (
 	github.com/gin-gonic/gin v1.5.0 // indirect
 	github.com/golang/protobuf v1.3.2
 	github.com/grpc/day2/myproto v0.0.0-00010101000000-000000000000 // indirect
+	github.com/jlaffaye/ftp v0.0.0-20200422224957-b9f3ade29122 // indirect
 	github.com/shiena/ansicolor v0.0.0-20151119151921-a422bbe96644 // indirect
 	github.com/sirupsen/logrus v1.4.2
 	golang.org/x/net v0.0.0-20190916140828-c8589233b77d
