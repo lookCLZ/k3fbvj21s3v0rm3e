@@ -1,8 +1,0 @@
-syntax = "proto3";
-package myproto;
-message Test {
-  string name  = 1;
-  int32 stature = 2 ;
-  repeated int64 weight  = 3;
-  string motto = 4;
-}
