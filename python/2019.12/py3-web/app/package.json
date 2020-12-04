@@ -44,7 +44,7 @@
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^3.3.7",
     "echarts": "^4.0.4",
-    "highlight.js": "^9.0.0",
+    "highlight.js": "^10.4.1",
     "i18next": "^8.4.3",
     "js-sha1": "^0.6.0",
     "lib-flexible": "^0.3.2",
